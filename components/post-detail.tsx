@@ -8,6 +8,7 @@ import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import { addLikedPost, removeLikedPost, isPostLiked } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
+import { LinkText } from "@/components/link-text"
 
 interface PostDetailProps {
   post: PostWithTimestamp
@@ -131,9 +132,9 @@ export function PostDetail({ post }: PostDetailProps) {
       <Card className="border-0 shadow-none rounded-none">
         <div ref={contentRef} className="p-6 space-y-4">
           <div className="space-y-4">
-            <p className="text-base leading-relaxed text-foreground break-words whitespace-pre-wrap">
-              {post.content}
-            </p>
+            <div className="text-base leading-relaxed text-foreground">
+              <LinkText text={post.content} />
+            </div>
 
             {post.imageUrl && (
               <div className="pt-2">
