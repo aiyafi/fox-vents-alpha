@@ -84,7 +84,7 @@ export function PostDetail({ post }: PostDetailProps) {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Quiet Thoughts",
+          title: "Fox Thoughts",
           text: post.content.substring(0, 100) + "...",
           url,
         })

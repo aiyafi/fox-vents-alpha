@@ -41,17 +41,17 @@ export async function generateMetadata({ params }: Props) {
     
     if (!post) {
       return {
-        title: 'Post not found - Quiet Thoughts',
+        title: 'Post not found - Fox Thoughts',
       }
     }
 
     return {
-      title: `${post.content.substring(0, 50)}... - Quiet Thoughts`,
+      title: `${post.content.substring(0, 50)}... - Fox Thoughts`,
       description: post.content.substring(0, 160),
     }
   } catch {
     return {
-      title: 'Post - Quiet Thoughts',
+      title: 'Post - Fox Thoughts',
     }
   }
 } 
