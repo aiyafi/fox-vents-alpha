@@ -1,0 +1,131 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+## Project Purpose
+A personal, anonymous venting platform. Public-facing viewer allows anyone to scroll a feed of anonymous posts, optionally like them, and view individual post details via shareable links.
+
+---
+
+## Core Features (Viewer Side)
+- **Public feed** of posts (`/`)
+- **PostCard** shows:
+  - Text content (multi-line)
+  - Optional image or video (full-width, maintain aspect ratio, no cropping)
+  - Like button + count (Twitter-style `❤️ 10`, toggle-able, stored in `localStorage`)
+- **Drill-down navigation** to detail view (`/post/[id]`)  
+- **Shareable URL** via that dynamic route  
+- **View counter** (optional) per post  
+- **Anonymous user ID** (UUID via `crypto.randomUUID()`) for per-user tracking without login  
+- **Mobile-responsive**, minimal-style UI
+
+---
+
+## Data Model (Post)
+```ts
+type Post = {
+  id: string;
+  content: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  likeCount: number;
+  createdAt: Timestamp;
+}
+```
+
+````markdown
+## Project Purpose
+A personal, anonymous venting platform. Public-facing viewer allows anyone to scroll a feed of anonymous posts, optionally like them, and view individual post details via shareable links.
+
+---
+
+## Core Features (Viewer Side)
+- **Public feed** of posts (`/`)
+- **PostCard** shows:
+  - Text content (multi-line)
+  - Optional image or video (full-width, maintain aspect ratio, no cropping)
+  - Like button + count (Twitter-style `❤️ 10`, toggle-able, stored in `localStorage`)
+- **Drill-down navigation** to detail view (`/post/[id]`)  
+- **Shareable URL** via that dynamic route  
+- **View counter** (optional) per post  
+- **Anonymous user ID** (UUID via `crypto.randomUUID()`) for per-user tracking without login  
+- **Mobile-responsive**, minimal-style UI
+
+---
+
+## Data Model (Post)
+```ts
+type Post = {
+  id: string;
+  content: string;
+  imageUrl?: string;
+  videoUrl?: string;
+  likeCount: number;
+  createdAt: Timestamp;
+}
+````
+
+---
+
+## Utility Functions (`lib/utils.ts`)
+
+* `getAllPosts(): Promise<Post[]>` — fetch sorted list of posts from Firestore
+* `getPostById(id: string): Promise<Post | null>` — fetch single post by ID
+* `getAnonymousUserId(): string` — generate/read UUID from `localStorage`
+
+---
+
+## Routing Summary
+
+* `/` → feed page showing all posts
+* `/post/[id]` → detail page for one post (deep link/shareable)
+
+---
+
+## Notes
+
+* Likes and views require **no login**
+* All tracking is **anonymous** and stored client-side
+* Firestore **auto-IDs** used for post identifiers
+* Uploader/admin side (Google OAuth) is planned separately
+
+---
+
+## Tech Stack
+
+### Frontend Framework
+
+* **Next.js** (App Router)
+* **React** + **TypeScript**
+
+### Styling
+
+* **Shadcn ui**
+* **Tailwind CSS**
+
+### Deployment
+
+* **Vercel**
+
+### Backend / Data
+
+* **Firebase Firestore** (post data, likeCount, timestamps)
+* **Firebase Storage** (media hosting)
+* **Firebase Security Rules** (optional)
+
+### State & Storage
+
+* **localStorage** (likedPostIds, anonUserId)
+* **`crypto.randomUUID()`** for anonymous user ID
+
+### Optional Libraries
+
+* **nanoid** (for custom post IDs, if desired)
+
+### Tools & Config
+
+* **pnpm** (package manager)
+* **ESLint** + **Prettier** (code linting/formatting)
+* **`tailwind.config.ts`** (Tailwind configuration)
+

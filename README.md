@@ -28,3 +28,37 @@ Continue building your app on:
 2. Deploy your chats from the v0 interface
 3. Changes are automatically pushed to this repository
 4. Vercel deploys the latest version from this repository
+```
+fox-vents-alpha
+├─ app
+│  ├─ globals.css
+│  ├─ layout.tsx
+│  └─ page.tsx
+├─ components
+│  ├─ navbar.tsx
+│  ├─ post-feed.tsx
+│  ├─ post.tsx
+│  ├─ theme-provider.tsx
+│  ├─ theme-toggle.tsx
+│  └─ ui
+│     └─ button.tsx
+├─ components.json
+├─ lib
+│  └─ utils.ts
+├─ next.config.mjs
+├─ package.json
+├─ pnpm-lock.yaml
+├─ postcss.config.mjs
+├─ public
+│  ├─ placeholder-logo.png
+│  ├─ placeholder-logo.svg
+│  ├─ placeholder-user.jpg
+│  ├─ placeholder.jpg
+│  └─ placeholder.svg
+├─ README.md
+├─ styles
+│  └─ globals.css
+├─ tailwind.config.ts
+└─ tsconfig.json
+
+```
