@@ -5,7 +5,7 @@ import { LenisProvider } from "@/components/lenis-provider"
 
 export const metadata = {
   title: "Fox Thoughts",
-  description: "A minimal, anonymous post viewer for personal venting",
+  description: "A quiet place for K9Fox to drop crumbs — honest thoughts, quietly placed.",
 }
 
 export default function RootLayout({
