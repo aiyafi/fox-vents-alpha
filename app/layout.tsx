@@ -4,9 +4,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LenisProvider } from "@/components/lenis-provider"
 
 export const metadata = {
-  title: "Quiet Thoughts",
+  title: "Fox Thoughts",
   description: "A minimal, anonymous post viewer for personal venting",
-    generator: 'v0.dev'
 }
 
 export default function RootLayout({

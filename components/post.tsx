@@ -2,33 +2,27 @@
 
 import { useState, useRef } from "react"
 import { Heart } from "lucide-react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import { useRouter } from 'next/navigation'
+import { formatTimestamp, type Post as PostType } from "@/lib/data"
+import { isPostLiked, addLikedPost, removeLikedPost, getTotalLikes, incrementLikes, decrementLikes } from "@/lib/storage"
+import { PostWithTimestamp } from "@/lib/types"
 
 interface PostProps {
-  post: {
-    id: number
-    content: string
-    image?: string
-    video?: string
-    likes: number
-    timestamp: string
-  }
+  post: PostWithTimestamp
 }
 
 export function Post({ post }: PostProps) {
-  const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(post.likes)
+  const [liked, setLiked] = useState(() => isPostLiked(post.id))
   const cardRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
 
   const handleLike = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     // Heart animation
     const heartIcon = e.currentTarget.querySelector('.heart-icon')
     if (heartIcon) {
@@ -40,18 +34,19 @@ export function Post({ post }: PostProps) {
         ease: "back.out(1.7)"
       })
     }
-    
+
     if (liked) {
-      setLikeCount(likeCount - 1)
+      removeLikedPost(post.id)
+      setLiked(false)
     } else {
-      setLikeCount(likeCount + 1)
+      addLikedPost(post.id)
+      setLiked(true)
     }
-    setLiked(!liked)
   }
 
   const handlePostClick = (e: React.MouseEvent) => {
     e.preventDefault()
-    
+
     if (!cardRef.current) return
 
     // Page exit animation
@@ -61,16 +56,16 @@ export function Post({ post }: PostProps) {
       }
     })
 
-    // Animate current page out
+    // Animate current post
     tl.to(cardRef.current, {
       scale: 1.02,
       duration: 0.2,
       ease: "power2.out"
     })
-    .to(cardRef.current, {
-      opacity: 0.7,
-      duration: 0.1
-    }, "-=0.1")
+      .to(cardRef.current, {
+        opacity: 0.7,
+        duration: 0.1
+      }, "-=0.1")
 
     // Animate other posts out
     const otherPosts = document.querySelectorAll('[data-post-card]')
@@ -88,34 +83,34 @@ export function Post({ post }: PostProps) {
   }
 
   return (
-    <Card 
+    <Card
       ref={cardRef}
       data-post-card
-      className="border-0 shadow-none rounded-none border-b last:border-b-0 hover:bg-muted/20 transition-colors cursor-pointer"
+      className="border-0 shadow-none rounded-none border-b last:border-b-0 hover:bg-muted/20 transition-colors cursor-pointer overflow-x-hidden"
       onClick={handlePostClick}
     >
       <div className="p-6 space-y-3">
         {/* Content */}
-        <p className="text-sm leading-relaxed text-foreground/90">
+        <p className="text-sm leading-relaxed text-foreground/90 break-words whitespace-pre-wrap">
           {post.content}
         </p>
 
         {/* Media */}
-        {post.image && (
+        {post.imageUrl && (
           <div className="pt-2">
-            <img 
-              src={post.image || "/placeholder.svg"} 
-              alt="" 
+            <img
+              src={post.imageUrl}
+              alt=""
               className="w-full rounded-md max-h-96 object-cover"
             />
           </div>
         )}
 
-        {post.video && (
+        {post.videoUrl && (
           <div className="pt-2">
-            <video 
-              src={post.video} 
-              controls 
+            <video
+              src={post.videoUrl}
+              controls
               className="w-full rounded-md max-h-96"
               onClick={(e) => e.stopPropagation()}
             />
@@ -130,10 +125,7 @@ export function Post({ post }: PostProps) {
             onClick={handleLike}
             className="h-8 px-2 text-muted-foreground hover:text-foreground"
           >
-            <Heart className={`heart-icon w-3.5 h-3.5 mr-1.5 ${liked ? "fill-red-500 text-red-500" : ""}`} />
-            <span className={`text-xs tabular-nums ${liked ? "text-red-500" : ""}`}>
-              {likeCount}
-            </span>
+            <Heart className={`heart-icon w-3.5 h-3.5 ${liked ? "fill-red-500 text-red-500" : ""}`} />
           </Button>
 
           <time className="text-xs text-muted-foreground/60">

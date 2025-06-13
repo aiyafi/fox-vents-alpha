@@ -6,110 +6,100 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
+import { addLikedPost, removeLikedPost, isPostLiked } from "@/lib/storage"
+import { PostWithTimestamp } from "@/lib/types"
 
 interface PostDetailProps {
-  post: {
-    id: number
-    content: string
-    image?: string
-    video?: string
-    likes: number
-    timestamp: string
-  }
+  post: PostWithTimestamp
 }
 
 export function PostDetail({ post }: PostDetailProps) {
+  // State
   const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(post.likes)
   const contentRef = useRef<HTMLDivElement>(null)
   const actionsRef = useRef<HTMLDivElement>(null)
   const backButtonRef = useRef<HTMLDivElement>(null)
 
+  // After mount in client, only then get from localStorage
   useEffect(() => {
-    // Stagger animation for post detail elements
+    setLiked(isPostLiked(post.id))
+  }, [post.id])
+
+  useEffect(() => {
     const tl = gsap.timeline({ delay: 0.2 })
 
-    // Back button animation
     if (backButtonRef.current) {
       gsap.set(backButtonRef.current, { opacity: 0, x: -20 })
       tl.to(backButtonRef.current, {
         opacity: 1,
         x: 0,
         duration: 0.4,
-        ease: "power3.out"
+        ease: "power3.out",
       })
     }
 
-    // Content animation
     if (contentRef.current) {
       gsap.set(contentRef.current, { opacity: 0, y: 30 })
-      tl.to(contentRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.6,
-        ease: "power3.out"
-      }, "-=0.2")
+      tl.to(
+        contentRef.current,
+        { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
+        "-=0.2"
+      )
     }
 
-    // Actions animation
     if (actionsRef.current) {
       gsap.set(actionsRef.current, { opacity: 0, y: 20 })
-      tl.to(actionsRef.current, {
-        opacity: 1,
-        y: 0,
-        duration: 0.4,
-        ease: "power3.out"
-      }, "-=0.3")
+      tl.to(
+        actionsRef.current,
+        { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" },
+        "-=0.3"
+      )
     }
   }, [])
 
   const handleLike = () => {
-    // Like animation
-    const heartIcon = document.querySelector('.heart-icon')
+    const heartIcon = document.querySelector(".heart-icon")
     if (heartIcon) {
       gsap.to(heartIcon, {
         scale: 1.3,
         duration: 0.1,
         yoyo: true,
         repeat: 1,
-        ease: "power2.out"
+        ease: "power2.out",
       })
     }
 
     if (liked) {
-      setLikeCount(likeCount - 1)
+      removeLikedPost(post.id)
+      setLiked(false)
     } else {
-      setLikeCount(likeCount + 1)
+      addLikedPost(post.id)
+      setLiked(true)
     }
-    setLiked(!liked)
   }
 
   const handleShare = async () => {
     const url = window.location.href
-    
+
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Quiet Thoughts',
-          text: post.content.substring(0, 100) + '...',
-          url: url,
+          title: "Quiet Thoughts",
+          text: post.content.substring(0, 100) + "...",
+          url,
         })
-      } catch (err) {
-        // Fallback to clipboard
+      } catch {
         navigator.clipboard.writeText(url)
       }
     } else {
-      // Fallback to clipboard
       navigator.clipboard.writeText(url)
-      
-      // Show copied feedback
-      const shareButton = document.querySelector('.share-button')
+      const shareButton = document.querySelector(".share-button")
       if (shareButton) {
         gsap.to(shareButton, {
           scale: 1.1,
           duration: 0.1,
           yoyo: true,
-          repeat: 1
+          repeat: 1,
         })
       }
     }
@@ -117,82 +107,82 @@ export function PostDetail({ post }: PostDetailProps) {
 
   return (
     <div className="py-6 space-y-4">
-      {/* Back Button */}
-      <div ref={backButtonRef} className="px-4">
+      {/* Back & Timestamp */}
+      <div
+        ref={backButtonRef}
+        className="px-4 flex items-center justify-between"
+      >
         <Link href="/">
-          <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-foreground">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="text-muted-foreground hover:text-foreground"
+          >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to feed
           </Button>
         </Link>
+        <time className="text-sm text-muted-foreground">
+          {post.timestamp}
+        </time>
       </div>
 
-      {/* Post Content */}
+      {/* Content */}
       <Card className="border-0 shadow-none rounded-none">
         <div ref={contentRef} className="p-6 space-y-4">
-          {/* Main Content */}
           <div className="space-y-4">
-            <p className="text-base leading-relaxed text-foreground">
+            <p className="text-base leading-relaxed text-foreground break-words whitespace-pre-wrap">
               {post.content}
             </p>
 
-            {/* Media */}
-            {post.image && (
+            {post.imageUrl && (
               <div className="pt-2">
-                <img 
-                  src={post.image || "/placeholder.svg"} 
-                  alt="" 
+                <img
+                  src={post.imageUrl}
+                  alt=""
                   className="w-full rounded-lg max-h-[500px] object-cover"
                 />
               </div>
             )}
 
-            {post.video && (
+            {post.videoUrl && (
               <div className="pt-2">
-                <video 
-                  src={post.video} 
-                  controls 
+                <video
+                  src={post.videoUrl}
+                  controls
                   className="w-full rounded-lg max-h-[500px]"
                 />
               </div>
             )}
           </div>
-
-          {/* Metadata */}
-          <div className="pt-4 border-t border-border/30">
-            <time className="text-sm text-muted-foreground">
-              {post.timestamp}
-            </time>
-          </div>
         </div>
 
         {/* Actions */}
-        <div ref={actionsRef} className="px-6 pb-6">
-          <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleLike}
-              className="h-10 px-4 text-muted-foreground hover:text-foreground"
-            >
-              <Heart className={`heart-icon w-4 h-4 mr-2 ${liked ? "fill-red-500 text-red-500" : ""}`} />
-              <span className={`text-sm tabular-nums ${liked ? "text-red-500" : ""}`}>
-                {likeCount} {likeCount === 1 ? 'like' : 'likes'}
-              </span>
-            </Button>
+        <div ref={actionsRef} className="px-6 pb-6 flex items-center justify-between">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleLike}
+            className="h-10 px-4 text-muted-foreground hover:text-foreground"
+          >
+            <Heart
+              className={`heart-icon w-4 h-4 ${
+                liked ? "fill-red-500 text-red-500" : ""
+              }`}
+            />
+          </Button>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleShare}
-              className="share-button h-10 px-4 text-muted-foreground hover:text-foreground"
-            >
-              <Share2 className="w-4 h-4 mr-2" />
-              <span className="text-sm">Share</span>
-            </Button>
-          </div>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleShare}
+            className="share-button h-10 px-4 text-muted-foreground hover:text-foreground"
+          >
+            <Share2 className="w-4 h-4 mr-2" />
+            <span className="text-sm">Share</span>
+          </Button>
         </div>
       </Card>
     </div>
   )
-} 
+}

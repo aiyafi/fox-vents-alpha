@@ -11,7 +11,7 @@ export function Navbar() {
       <div className="container max-w-2xl mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <span className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
-            quiet thoughts
+            Fox Thoughts
           </span>
         </Link>
         <ThemeToggle />
