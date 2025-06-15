@@ -141,7 +141,7 @@ export function PostDetail({ post }: PostDetailProps) {
                 <img
                   src={post.imageUrl}
                   alt=""
-                  className="w-full rounded-lg max-h-[500px] object-cover"
+                  className="w-full h-auto rounded-lg object-contain"
                 />
               </div>
             )}
@@ -151,7 +151,7 @@ export function PostDetail({ post }: PostDetailProps) {
                 <video
                   src={post.videoUrl}
                   controls
-                  className="w-full rounded-lg max-h-[500px]"
+                  className="w-full h-auto rounded-lg object-contain"
                 />
               </div>
             )}
