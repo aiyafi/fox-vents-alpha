@@ -1,0 +1,2699 @@
+TITLE: Deliver audio in optimized format using Cloudinary SDKs
+DESCRIPTION: Audio files uploaded to Cloudinary as 'video' asset types can be delivered in different optimized formats (e.g., WAV to MP3) by changing the delivery URL extension. This improves performance by reducing file size and download times. The following examples demonstrate how to generate such URLs using various Cloudinary SDKs.
+SOURCE: https://cloudinary.com/documentation/audio_optimization
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.url("docs/fireflywav.mp3", {resource_type: "video"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3");
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3");
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3");
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3");
+```
+
+LANGUAGE: python
+CODE:
+```
+cloudinary.utils.cloudinary_url("docs/fireflywav.mp3", resource_type="video")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new VideoTag('docs/fireflywav.mp3'));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().resourceType("video").generate("docs/fireflywav.mp3")
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cloudinary_url("docs/fireflywav.mp3", resource_type: "video")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.BuildUrl("docs/fireflywav.mp3")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.video('docs/fireflywav.mp3').transformation(Transformation());
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").generate("docs/fireflywav.mp3")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().resourceType("video").generate("docs/fireflywav.mp3");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.video('docs/fireflywav.mp3').transformation(Transformation());
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.video {
+	publicId("docs/fireflywav.mp3") 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.url("docs/fireflywav.mp3", {resource_type: "video"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3");
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Automatic Optimal Format in Go
+DESCRIPTION: This Go example shows how to use the `f_auto` transformation to instruct Cloudinary to automatically select and deliver the most optimized image format (e.g., AVIF, WebP) for each requesting browser. This optimizes delivery without manual format specification, improving performance and user experience.
+SOURCE: https://cloudinary.com/documentation/go_media_transformations
+
+LANGUAGE: Go
+CODE:
+```
+// Instantiate an object for the image with public ID "cloud_castle" in folder "docs/sdk/go"
+img_fam, err := cld.Image("docs/sdk/go/cloud_castle")
+if err != nil {
+	fmt.Println("error")
+}
+
+// Add the transformation
+img_fam.Transformation = "f_auto"
+
+// Generate and print the delivery URL
+myURL, err := img_fam.String()
+if err != nil {
+	fmt.Println("error")
+}
+fmt.Println(myURL)
+
+// Output: https://res.cloudinary.com/demo/image/upload/f_auto/v1/docs/sdk/go/cloud_castle
+```
+
+----------------------------------------
+
+TITLE: Optimize PDF on Delivery with `q_auto` URL Transformation
+DESCRIPTION: This snippet demonstrates how to apply the `q_auto` transformation parameter directly to a Cloudinary delivery URL to automatically optimize a PDF file. This method delivers a compressed version of the PDF without altering the original stored file. The example shows a reduction from 1.8 MB to 1.1 MB.
+SOURCE: https://cloudinary.com/documentation/pdf_optimization
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com/cld-docs/image/upload/q_auto/39_Acacia_Road_Brochure.pdf
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Automatic Format Selection (JavaScript)
+DESCRIPTION: This snippet illustrates how to use `f_auto` to instruct Cloudinary to automatically deliver the image in the most optimized format (e.g., AVIF or WebP) for each requesting browser. This optimizes delivery without manual format specification.
+SOURCE: https://cloudinary.com/documentation/javascript_image_transformations
+
+LANGUAGE: JavaScript
+CODE:
+```
+import {Cloudinary} from "@cloudinary/url-gen";
+
+// Create and configure your Cloudinary instance.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'demo'
+  }
+}); 
+
+// Use the image with public ID, 'docs/shoes'.
+const myImage = cld.image('docs/shoes');
+
+// Request automatic format.
+myImage.format('auto');
+
+// Return the delivery URL
+const myUrl = myImage.toURL();
+```
+
+----------------------------------------
+
+TITLE: Deliver Videos in Optimal Format with AdvancedVideo Component in React
+DESCRIPTION: This snippet shows how to use the `AdvancedVideo` component from `@cloudinary/react` to automatically deliver videos in their optimal format. The component creates sources for modern formats, allowing the browser to select the best supported format, which further enhances performance and compatibility.
+SOURCE: https://cloudinary.com/documentation/optimize_videos_in_react_tutorial
+
+LANGUAGE: React
+CODE:
+```
+import { AdvancedVideo } from '@cloudinary/react';
+
+<AdvancedVideo
+  cldVid={cld.video(video/cooking-stirfry').quality('auto')}
+/>
+```
+
+----------------------------------------
+
+TITLE: Apply Automatic Image Optimization Transformations in Flutter
+DESCRIPTION: This code adds `transformation` properties to a Cloudinary image widget. It applies `Delivery.format(Format.auto)` to automatically deliver the image in the most suitable format (e.g., WEBP) and `Delivery.quality(Quality.auto())` to achieve an optimal balance between file size and visual quality, significantly reducing bandwidth.
+SOURCE: https://cloudinary.com/documentation/optimize_images_in_flutter_tutorial
+
+LANGUAGE: Flutter
+CODE:
+```
+  transformation: Transformation()
+  ..delivery(Delivery.format(Format.auto))
+  ..delivery(Delivery.quality(Quality.auto()))
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Auto Breakpoints and Aspect Ratio
+DESCRIPTION: Demonstrates how to deliver an image (`bike.jpg`) filled to a 16:9 aspect ratio and then automatically scaled to the closest optimal breakpoint. The optimal breakpoints are calculated using specific request values: `min_width=200`, `max_width=1920`, `bytes_step=30`, and `max_images=15`. This transformation leverages client hints for responsive image delivery.
+SOURCE: https://cloudinary.com/documentation/responsive_server_side_client_hints
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("bike.jpg", client_hints: true, sizes: "100vw", transformation: [
+  {aspect_ratio: "16:9", crop: "fill"},
+  {width: "auto:breakpoints_200_1920_30_15", crop: "limit"}])
+```
+
+LANGUAGE: php
+CODE:
+```
+ImageTag::fromParams("bike.jpg", 
+  ["client_hints"=>true, "sizes"=>"100vw", "transformation"=>[
+    ["aspect_ratio"=>"16:9", "crop"=>"fill"],
+    ["width"=>"auto:breakpoints_200_1920_30_15", "crop"=>"limit"]]])
+```
+
+LANGUAGE: php
+CODE:
+```
+cl_image_tag("bike.jpg", 
+  ["client_hints"=>true, "sizes"=>"100vw", "transformation"=>[
+    ["aspect_ratio"=>"16:9", "crop"=>"fill"],
+    ["width"=>"auto:breakpoints_200_1920_30_15", "crop"=>"limit"]]])
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryImage("bike.jpg").image(client_hints=True, sizes="100vw", transformation=[
+  {"aspect_ratio": "16:9", "crop": "fill"},
+  {"width": "auto:breakpoints_200_1920_30_15", "crop": "limit"}])
+```
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("bike.jpg", {client_hints: true, sizes: "100vw", transformation: [
+  {aspect_ratio: "16:9", crop: "fill"},
+  {width: "auto:breakpoints_200_1920_30_15", crop: "limit"}]})
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .aspectRatio("16:9").crop("fill").chain()
+  .width("auto:breakpoints_200_1920_30_15").crop("limit")
+  .clientHints(true).sizes("100vw").imageTag("bike.jpg"))
+```
+
+----------------------------------------
+
+TITLE: Deliver and Reuse Images with Cloudinary Named Transformations in HTML
+DESCRIPTION: These HTML <img> tags demonstrate how to deliver images using a pre-defined named transformation (t_billboard_ad). Named transformations simplify URLs, improve readability, and enable reuse across multiple assets and versions, making them ideal for managing complex or frequently applied transformations efficiently.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: HTML
+CODE:
+```
+<img src="https://cloudinary-res.cloudinary.com/image/upload/t_billboard_ad/restaurant_banner.jpg" alt="Dynamic banner - named transformation" title="thumb: w_300,dpr_2, width:300, popup:true, with_url:true, with_code:true">
+```
+
+LANGUAGE: HTML
+CODE:
+```
+<img src="https://cloudinary-res.cloudinary.com/image/upload/t_billboard_ad/wine_and_candles_dinner.jpg" alt="Dynamic banner - named transformation" title="thumb: w_300,dpr_2, width:300, popup:true, with_url:true, with_code:true">
+```
+
+LANGUAGE: HTML
+CODE:
+```
+<img src="https://cloudinary-res.cloudinary.com/image/upload/t_billboard_ad/v1743893134/elegant_romantic_dinner.jpg" alt="Dynamic banner - named transformation" title="thumb: w_300,dpr_2, width:300, popup:true, with_url:true, with_code:true">
+```
+
+----------------------------------------
+
+TITLE: Auto Select Optimal File Format with Cloudinary's f_auto
+DESCRIPTION: Understand how Cloudinary's `f_auto` parameter automatically detects the requesting browser and delivers the image in its most efficient format. This ensures optimal performance and compatibility across different platforms.
+SOURCE: https://cloudinary.com/documentation/optimization_tips_tutorial
+
+LANGUAGE: APIDOC
+CODE:
+```
+`f_auto` parameter: Automatically detects the requesting browser and delivers the image in its most efficient format (e.g., WebP, JPEG XR, AVIF, or JPEG).
+```
+
+----------------------------------------
+
+TITLE: Deliver video with automatic format selection and scaling
+DESCRIPTION: This code demonstrates how to deliver a video (`hotel_buffet`) scaled to a height of 280 pixels, with automatic format selection (`f_auto`) applied. This ensures the video is delivered in the most optimal format for the requesting browser, saving bandwidth and improving delivery time.
+SOURCE: https://cloudinary.com/documentation/video_optimization
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.video("docs/hotel_buffet", {transformation: [
+  {height: 280, crop: "scale"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryVideo("docs/hotel_buffet.mp4")
+  .resize(scale().height(280))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryVideo("docs/hotel_buffet.mp4")
+  .resize(scale().height(280))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryVideo("docs/hotel_buffet.mp4")
+  .resize(scale().height(280))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryVideo("docs/hotel_buffet.mp4")
+  .resize(scale().height(280))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryVideo("docs/hotel_buffet").video(transformation=[
+  {'height': 280, 'crop': "scale"},
+  {'fetch_format': "auto"}
+  ])
+```
+
+LANGUAGE: php
+CODE:
+```
+(new VideoTag('docs/hotel_buffet.mp4'))
+	->resize(Resize::scale()->height(280))
+	->delivery(Delivery::format(
+	Format::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .height(280).crop("scale").chain()
+  .fetchFormat("auto")).videoTag("docs/hotel_buffet");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_video_tag("docs/hotel_buffet", transformation: [
+  {height: 280, crop: "scale"},
+  {fetch_format: "auto"}
+  ])
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation()
+  .Height(280).Crop("scale").Chain()
+  .FetchFormat("auto")).BuildVideoTag("docs/hotel_buffet")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.video('docs/hotel_buffet.mp4').transformation(Transformation()
+	.resize(Resize.scale().height(280))
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation()
+  .setHeight(280).setCrop("scale").chain()
+  .setFetchFormat("auto")).generate("docs/hotel_buffet.mp4")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation()
+  .height(280).crop("scale").chain()
+  .fetchFormat("auto")).resourceType("video").generate("docs/hotel_buffet.mp4");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.video('docs/hotel_buffet.mp4').transformation(Transformation()
+	.resize(Resize.scale().height(280))
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.video {
+	publicId("docs/hotel_buffet.mp4")
+	 resize(Resize.scale() { height(280) })
+	 delivery(Delivery.format(
+	Format.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.video("docs/hotel_buffet", {transformation: [
+  {height: 280, crop: "scale"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryVideo("docs/hotel_buffet.mp4")
+  .resize(scale().height(280))
+  .delivery(format(auto()));
+```
+
+----------------------------------------
+
+TITLE: Cloudinary: Resize and Optimize Image with Scaling
+DESCRIPTION: This snippet illustrates how to resize an image on Cloudinary servers before applying automatic quality and format optimizations. By adding `/c_scale,w_500` to the URL, the image is scaled to a width of 500 pixels, significantly reducing its file size. This approach improves page load performance by delivering appropriately sized images, with `q_auto/f_auto` ensuring optimal quality and format for the resized variant.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com//image/upload/c_scale,w_500/q_auto/f_auto/cld-sample-4.jpg
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Cloudinary Direct Transformation URL in HTML
+DESCRIPTION: This HTML <img> tag demonstrates how to embed an image using a direct Cloudinary transformation URL. The URL contains all transformation parameters directly, making it long but immediately applicable for specific image manipulations.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: HTML
+CODE:
+```
+<img src="https://cloudinary-res.cloudinary.com/image/upload/c_scale,w_1500/w_850,h_1000,c_fill/c_pad,b_gen_fill,w_850,h_1150,g_south/e_gen_remove:prompt_plate/e_gen_remove:prompt_food/c_fit,co_white,l_text:Arial_85_bold:NEW%20LOCATION,w_600/g_north_west,x_60,y_60,fl_layer_apply/c_fit,co_white,l_text:Arial_75_line_spacing_-10:Treat%20yourself%20just%20around%20the%20corner,w_300/g_east,y_50,x_80,fl_layer_apply/c_fit,co_white,l_text:Impact_95_bold_line_spacing_-10:The%20Cafe%20Coffee,w_450/g_south_east,x_80,y_50,fl_layer_apply/f_auto/q_auto/restaurant_banner.jpg" alt="Dynamic banner" title="thumb: w_300,dpr_2, width:300, popup:true, with_url:true, with_code:true">
+```
+
+----------------------------------------
+
+TITLE: Cloudinary: Optimize Image with Auto Quality and Format
+DESCRIPTION: This snippet demonstrates how to apply automatic quality and format optimization to an image using Cloudinary's URL transformations. By adding `/q_auto/f_auto` to the delivery URL, Cloudinary dynamically generates an optimized version, selecting the best file format and compression based on the asset's content and the requesting browser/device. This derived asset is cached globally for fast delivery.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com//image/upload/q_auto/f_auto/cld-sample-4.jpg
+```
+
+----------------------------------------
+
+TITLE: Progressively Deliver Video with Automatic Format and Quality Optimization (Cloudinary)
+DESCRIPTION: This code demonstrates how to use Cloudinary SDKs to progressively deliver a short-form video, applying automatic format transcoding (f_auto) and quality optimization (q_auto). This ensures the video is served in the best possible file format and with the optimal balance between visual fidelity and file size, adapting to the user's browser and device for efficient streaming.
+SOURCE: https://cloudinary.com/documentation/video_best_practices
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.video("samples/cld-sample-video", {quality: "auto"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryVideo("samples/cld-sample-video.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryVideo("samples/cld-sample-video.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryVideo("samples/cld-sample-video.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryVideo("samples/cld-sample-video.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryVideo("samples/cld-sample-video").video(quality="auto")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new VideoTag('samples/cld-sample-video.mp4'))
+	->delivery(Delivery::format(
+	Format::auto()))
+	->delivery(Delivery::quality(
+	Quality::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().quality("auto")).videoTag("samples/cld-sample-video");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_video_tag("samples/cld-sample-video", quality: "auto")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation().Quality("auto")).BuildVideoTag("samples/cld-sample-video")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.video('samples/cld-sample-video.mp4').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto()))
+	.delivery(Delivery.quality(
+	Quality.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation().setQuality("auto")).generate("samples/cld-sample-video.mp4")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().quality("auto")).resourceType("video").generate("samples/cld-sample-video.mp4");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.video('samples/cld-sample-video.mp4').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto()))
+	.delivery(Delivery.quality(
+	Quality.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.video {
+	publicId("samples/cld-sample-video.mp4")
+	 delivery(Delivery.format(
+	Format.auto()))
+	 delivery(Delivery.quality(
+	Quality.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.video("samples/cld-sample-video", {quality: "auto"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryVideo("samples/cld-sample-video.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+----------------------------------------
+
+TITLE: Cloudinary Image Delivery URL Structure and Example
+DESCRIPTION: This snippet provides an example of a Cloudinary image delivery URL and details the general format for delivering assets. It explains each component of the URL, including cloud name, asset type (image, video, raw), delivery type (upload, authenticated, private, fetch), public ID, and optional file extension, highlighting their roles in asset retrieval and optimization.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com//image/upload/cld-sample-4.jpg
+```
+
+LANGUAGE: APIDOC
+CODE:
+```
+Delivery URL Format:
+https://res.cloudinary.com/<your_cloud_name>/<asset type>/<delivery type>/<public ID>.<extension>
+
+Components:
+- Your cloud name: Indicates the product environment in your account where your asset is stored.
+- Asset type: Either image, video, or raw.
+- Delivery type: upload by default, but can be authenticated, private, fetch, facebook, or twitter.
+- Public ID: A delivery identifier for your asset. Must be unique for the asset type and delivery type within your product environment. Can contain slashes.
+- Extension: Optional. If not specified, the asset is delivered in its original format. If specified and different, Cloudinary converts the delivered asset to that format.
+```
+
+----------------------------------------
+
+TITLE: Trim and Standardize Video Length and Quality
+DESCRIPTION: Illustrates a named transformation to trim a video to a maximum length of 15 seconds, remove its sound, and optimize its format and quality. This helps in standardizing video assets for consistent delivery.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation String
+CODE:
+```
+eo_15/ac_none/f_auto/q_auto
+```
+
+----------------------------------------
+
+TITLE: Cloudinary Upload Preset: Optimize and Deliver Settings
+DESCRIPTION: Specifies the delivery type for uploaded videos, making them publicly available.
+SOURCE: https://cloudinary.com/documentation/video_review_sample_project
+
+LANGUAGE: APIDOC
+CODE:
+```
+Parameter: Delivery type
+  Value: Upload
+  Meaning: Make the video publicly available.
+```
+
+----------------------------------------
+
+TITLE: Optimize Image Quality and Format Automatically (jQuery)
+DESCRIPTION: This snippet illustrates how to leverage Cloudinary's automatic image optimization features. By setting `quality` and `fetch_format` to `auto`, Cloudinary automatically delivers the image in the most efficient format and quality level, significantly reducing file size without compromising visual quality.
+SOURCE: https://cloudinary.com/documentation/jquery_image_manipulation
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("pond_reflect.jpg", {quality: "auto", fetch_format: "auto"})
+```
+
+----------------------------------------
+
+TITLE: Generate Optimized Image URLs with Cloudinary SDKs
+DESCRIPTION: This snippet demonstrates how to generate an optimized image delivery URL using Cloudinary SDKs. It applies transformations for scaling width to 500 pixels, automatic quality, and automatic format selection for the 'cld-sample-4.jpg' image.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("cld-sample-4.jpg", {transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryImage("cld-sample-4.jpg")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryImage("cld-sample-4.jpg")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryImage("cld-sample-4.jpg")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryImage("cld-sample-4.jpg")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryImage("cld-sample-4.jpg").image(transformation=[
+  {'width': 500, 'crop': "scale"},
+  {'quality': "auto"},
+  {'fetch_format': "auto"}
+  ])
+```
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('cld-sample-4.jpg'))
+	->resize(Resize::scale()->width(500))
+	->delivery(Delivery::quality(
+	Quality::auto()))
+	->delivery(Delivery::format(
+	Format::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .width(500).crop("scale").chain()
+  .quality("auto").chain()
+  .fetchFormat("auto")).imageTag("cld-sample-4.jpg");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("cld-sample-4.jpg", transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ])
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlImgUp.Transform(new Transformation()
+  .Width(500).Crop("scale").Chain()
+  .Quality("auto").Chain()
+  .FetchFormat("auto")).BuildImageTag("cld-sample-4.jpg")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.image('cld-sample-4.jpg').transformation(Transformation()
+	.resize(Resize.scale().width(500))
+	.delivery(Delivery.quality(
+	Quality.auto()))
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+imageView.cldSetImage(cloudinary.createUrl().setTransformation(CLDTransformation()
+  .setWidth(500).setCrop("scale").chain()
+  .setQuality("auto").chain()
+  .setFetchFormat("auto")).generate("cld-sample-4.jpg")!, cloudinary: cloudinary)
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation()
+  .width(500).crop("scale").chain()
+  .quality("auto").chain()
+  .fetchFormat("auto")).generate("cld-sample-4.jpg");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.image('cld-sample-4.jpg').transformation(Transformation()
+	.resize(Resize.scale().width(500))
+	.delivery(Delivery.quality(
+	Quality.auto()))
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("cld-sample-4.jpg")
+	 resize(Resize.scale() { width(500) })
+	 delivery(Delivery.quality(
+	Quality.auto()))
+	 delivery(Delivery.format(
+	Format.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("cld-sample-4.jpg", {transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryImage("cld-sample-4.jpg")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()));
+```
+
+----------------------------------------
+
+TITLE: Cloudinary: Optimize Video with Scaling and Auto Quality/Format
+DESCRIPTION: This snippet demonstrates how to apply scaling, auto-quality, and auto-format transformations to a video using Cloudinary URLs. It shows how to reduce video file size and change its format on the fly, similar to image optimization. The first delivery of an optimized video transformation occurs progressively, while subsequent loads benefit from a cached version, improving user experience.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com//video/upload/samples/cld-sample-video.mp4
+```
+
+LANGUAGE: URL
+CODE:
+```
+https://res.cloudinary.com//video/upload/c_scale,w_500/q_auto/f_auto/samples/cld-sample-video.mp4
+```
+
+----------------------------------------
+
+TITLE: Generate Optimized Video URLs with Cloudinary SDKs
+DESCRIPTION: This snippet demonstrates how to generate an optimized video delivery URL using Cloudinary SDKs. It applies transformations for scaling width to 500 pixels, automatic quality, and automatic format selection for the 'samples/cld-sample-video' video asset.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("samples/cld-sample-video", {resource_type: "video", transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryImage("samples/cld-sample-video")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()))
+  .setAssetType("video");
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryImage("samples/cld-sample-video")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()))
+  .setAssetType("video");
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryImage("samples/cld-sample-video")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()))
+  .setAssetType("video");
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryImage("samples/cld-sample-video")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()))
+  .setAssetType("video");
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryVideo("samples/cld-sample-video").image(transformation=[
+  {'width': 500, 'crop': "scale"},
+  {'quality': "auto"},
+  {'fetch_format': "auto"}
+  ])
+```
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('samples/cld-sample-video'))
+	->resize(Resize::scale()->width(500))
+	->delivery(Delivery::quality(
+	Quality::auto()))
+```
+
+----------------------------------------
+
+TITLE: Deliver Animated GIFs as Lossy GIFs for File Size Optimization
+DESCRIPTION: Demonstrates how to deliver animated GIFs as lossy GIFs using the `lossy` flag, significantly reducing file size while maintaining acceptable quality. This optimization is applied via various Cloudinary SDKs and libraries.
+SOURCE: https://cloudinary.com/documentation/image_optimization
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("kitten_fighting", {flags: "lossy"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryImage("kitten_fighting.gif").delivery(format(gif()).lossy());
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryImage("kitten_fighting.gif").delivery(format(gif()).lossy());
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryImage("kitten_fighting.gif").delivery(format(gif()).lossy());
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryImage("kitten_fighting.gif").delivery(format(gif()).lossy());
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryImage("kitten_fighting").image(flags="lossy")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('kitten_fighting.gif'))
+	->delivery(Delivery::format(
+	Format::gif())
+	->lossy()
+	);
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().flags("lossy")).imageTag("kitten_fighting");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("kitten_fighting", flags: "lossy")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlImgUp.Transform(new Transformation().Flags("lossy")).BuildImageTag("kitten_fighting")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.image('kitten_fighting.gif').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.gif())
+	.lossy()
+	));
+```
+
+LANGUAGE: swift
+CODE:
+```
+imageView.cldSetImage(cloudinary.createUrl().setTransformation(CLDTransformation().setFlags("lossy")).generate("kitten_fighting")!, cloudinary: cloudinary)
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().flags("lossy")).generate("kitten_fighting");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.image('kitten_fighting.gif').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.gif())
+	.lossy()
+	));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("kitten_fighting.gif")
+	 delivery(Delivery.format(
+	Format.gif()) {
+	 lossy()
+	 }) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("kitten_fighting", {flags: "lossy"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryImage("kitten_fighting.gif").delivery(format(gif()).lossy());
+```
+
+----------------------------------------
+
+TITLE: Applying Automatic Quality Transformations (`q_auto`)
+DESCRIPTION: Demonstrates various `q_auto` parameter values for automatic image quality optimization, balancing file size and visual fidelity. Different values like `best`, `good`, `eco`, `low:sensitive`, and `low` offer varying levels of compression and visual quality trade-offs.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+q_auto:best
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+q_auto:good
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+q_auto:eco
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+q_auto:low:sensitive
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+q_auto:low
+```
+
+----------------------------------------
+
+TITLE: Deliver an image using the Cloudinary CldImage component in Svelte
+DESCRIPTION: Import the `CldImage` component into your Svelte project and replace existing image tags. Specify only the public ID instead of the full delivery URL for simplified image delivery.
+SOURCE: https://cloudinary.com/documentation/transform_images_svelte_tutorial
+
+LANGUAGE: javascript
+CODE:
+```
+import { CldImage } from 'svelte-cloudinary';
+...
+<cldImage
+  src={<public_id>}
+  width={<width>}
+  height={<height>}
+  alt={<alt>}/>
+```
+
+----------------------------------------
+
+TITLE: Optimize Image Quality and Format Automatically (C#)
+DESCRIPTION: This snippet illustrates how to use Cloudinary's `auto` values for `fetch_format` and `quality` attributes. This automatically delivers the image in the most efficient format and quality, minimizing file size without visible quality loss. It also includes resizing the image for further optimization.
+SOURCE: https://cloudinary.com/documentation/dotnet_image_manipulation
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlImgUp.Transform(new Transformation()
+  .Width(500).Crop("scale").Chain()
+  .Quality("auto").FetchFormat("auto")).BuildImageTag("pond_reflect.jpg")
+```
+
+----------------------------------------
+
+TITLE: Progressively Deliver Video with Automatic Format and Quality
+DESCRIPTION: This code demonstrates how to progressively deliver a video using Cloudinary's automatic format and quality selection, ensuring optimal delivery for the user's device and network conditions.
+SOURCE: https://cloudinary.com/documentation/social_media_videos
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.video("docs/walking", {quality: "auto"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryVideo("docs/walking.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryVideo("docs/walking.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryVideo("docs/walking.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryVideo("docs/walking.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryVideo("docs/walking").video(quality="auto")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new VideoTag('docs/walking.mp4'))
+	->delivery(Delivery::format(
+	Format::auto()))
+	->delivery(Delivery::quality(
+	Quality::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().quality("auto")).videoTag("docs/walking");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_video_tag("docs/walking", quality: "auto")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation().Quality("auto")).BuildVideoTag("docs/walking")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.video('docs/walking.mp4').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto()))
+	.delivery(Delivery.quality(
+	Quality.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation().setQuality("auto")).generate("docs/walking.mp4")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().quality("auto")).resourceType("video").generate("docs/walking.mp4");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.video('docs/walking.mp4').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto()))
+	.delivery(Delivery.quality(
+	Quality.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.video {
+	publicId("docs/walking.mp4")
+	 delivery(Delivery.format(
+	Format.auto()))
+	 delivery(Delivery.quality(
+	Quality.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.video("docs/walking", {quality: "auto"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryVideo("docs/walking.mp4")
+  .delivery(format(auto()))
+  .delivery(quality(auto()));
+```
+
+----------------------------------------
+
+TITLE: Deliver image with automatic format selection in PHP
+DESCRIPTION: This example shows how to let Cloudinary select the optimal format for each browser using `f_auto`, which may deliver the image in .avif or .webp format depending on the browser and product environment setup.
+SOURCE: https://cloudinary.com/documentation/php_image_manipulation
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('cloud_castle.jpg'))
+	->resize(Resize::scale()->width(350))
+	->delivery(Delivery::format(
+	Format::auto()));
+```
+
+----------------------------------------
+
+TITLE: Cloudinary Direct Transformation String for Dynamic Banner Ad
+DESCRIPTION: This transformation string applies a series of operations to an image, including resizing, generative background fill, object removal (plate, food), and adding multiple text overlays with specific fonts, sizes, and placements, finally optimizing format and quality. It's suitable for one-off use cases but can result in long URLs.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation String
+CODE:
+```
+c_scale,w_1500/w_850,h_1000,c_fill/c_pad,b_gen_fill,w_850,h_1150,g_south/e_gen_remove:prompt_plate/e_gen_remove:prompt_food/c_fit,co_white,l_text:Arial_85_bold:NEW%20LOCATION,w_600/g_north_west,x_60,y_60,fl_layer_apply/c_fit,co_white,l_text:Arial_75_line_spacing_-10:Treat%20yourself%20just%20around%20the%20corner,w_300/g_east,y_50,x_80,fl_layer_apply/c_fit,co_white,l_text:Impact_95_bold_line_spacing_-10:The%20Cafe%20Coffee,w_450/g_south_east,x_80,y_50,fl_layer_apply/f_auto/q_auto
+```
+
+----------------------------------------
+
+TITLE: Optimize Image Format and Quality with Cloudinary React SDK
+DESCRIPTION: This code optimizes image delivery by automatically selecting the most efficient format (`f_auto`) and quality (`q_auto`) based on the user's browser and device capabilities. This ensures faster loading times and reduced bandwidth usage without compromising visual quality. It's a crucial step for web performance.
+SOURCE: https://cloudinary.com/documentation/try_before_you_buy_sample_project
+
+LANGUAGE: react
+CODE:
+```
+  myImage.format('auto').quality('auto');
+```
+
+----------------------------------------
+
+TITLE: Optimize Image Quality and Format Automatically (Java)
+DESCRIPTION: This Java code snippet shows how to use Cloudinary's `auto` value for `fetch_format` and `quality` attributes to automatically deliver images in the most efficient format and quality. It also includes resizing the image for further size reduction.
+SOURCE: https://cloudinary.com/documentation/java_image_manipulation
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .width(500).crop("scale").chain()
+  .quality("auto").fetchFormat("auto")).imageTag("pond_reflect.jpg");
+```
+
+----------------------------------------
+
+TITLE: Optimize Image Quality and Format Automatically with Cloudinary Swift SDK
+DESCRIPTION: This Swift code illustrates how to use Cloudinary's automatic image optimization features by setting `fetchFormat` and `quality` to `auto`. This approach ensures the image is delivered with the optimal file format and minimized file size for the requesting device without visible quality degradation.
+SOURCE: https://cloudinary.com/documentation/ios_image_manipulation
+
+LANGUAGE: swift
+CODE:
+```
+let url = cloudinary.createUrl()
+  .setTransformation(CLDTransformation()
+    .setFetchFormat("auto")
+    .setQuality("auto"))
+  .generate("pond_reflect.jpg")
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Automatic Format Selection (JavaScript)
+DESCRIPTION: This example demonstrates how to use `f_auto` (automatic format selection) to instruct Cloudinary to deliver the image in the most optimized format for each requesting browser. This ensures efficient delivery by serving formats like AVIF or WebP when supported.
+SOURCE: https://cloudinary.com/documentation/angular_image_transformations
+
+LANGUAGE: JavaScript
+CODE:
+```
+import {Cloudinary} from "@cloudinary/url-gen";
+
+// Create and configure your Cloudinary instance.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'demo'
+  }
+}); 
+
+// Use the image with public ID, 'docs/shoes'.
+const myImage = cld.image('docs/shoes');
+
+// Request automatic format.
+myImage.format('auto');
+
+// Return the delivery URL
+const myUrl = myImage.toURL();
+```
+
+----------------------------------------
+
+TITLE: Optimizing Image Quality and Format Automatically with Cloudinary (PHP)
+DESCRIPTION: This PHP code snippet illustrates how to leverage Cloudinary's automatic optimization features by setting `fetch_format` and `quality` to `auto`. This ensures the image is delivered in the most efficient format and quality level, significantly reducing file size without compromising visual quality, as demonstrated by the example's file size reduction.
+SOURCE: https://cloudinary.com/documentation/php_image_manipulation
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('pond_reflect.jpg'))
+	->resize(Resize::scale()->width(500))
+	->delivery(Delivery::format(
+	Format::auto()))
+	->delivery(Delivery::quality(
+	Quality::auto()));
+```
+
+----------------------------------------
+
+TITLE: Apply Automatic Format to Cloudinary Assets Programmatically
+DESCRIPTION: This snippet demonstrates how to apply automatic format selection (`f_auto`) to Cloudinary image delivery URLs using various SDKs. This ensures that images are delivered in the optimal format (e.g., WebP, AVIF, JPEG) based on the user's browser and device capabilities, improving performance and user experience. The `f_auto` parameter is added to the transformation chain.
+SOURCE: https://cloudinary.com/documentation/media_optimization
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("woman.jpg", {fetch_format: "auto"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryImage("woman.jpg").delivery(format(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryImage("woman.jpg").delivery(format(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryImage("woman.jpg").delivery(format(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryImage("woman.jpg").delivery(format(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryImage("woman.jpg").image(fetch_format="auto")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('woman.jpg'))
+	->delivery(Delivery::format(
+	Format::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().fetchFormat("auto")).imageTag("woman.jpg");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("woman.jpg", fetch_format: "auto")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlImgUp.Transform(new Transformation().FetchFormat("auto")).BuildImageTag("woman.jpg")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.image('woman.jpg').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+imageView.cldSetImage(cloudinary.createUrl().setTransformation(CLDTransformation().setFetchFormat("auto")).generate("woman.jpg")!, cloudinary: cloudinary)
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().fetchFormat("auto")).generate("woman.jpg");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.image('woman.jpg').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("woman.jpg")
+	 delivery(Delivery.format(
+	Format.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("woman.jpg", {fetch_format: "auto"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryImage("woman.jpg").delivery(format(auto()));
+```
+
+----------------------------------------
+
+TITLE: Optimize and Resize Video with f_auto, q_auto, and width
+DESCRIPTION: Illustrates how to apply `f_auto`, `q_auto`, and width resizing (`w_800`) parameters to a video delivery URL. This optimizes the video's format and quality, and reduces its dimensions, resulting in a significantly smaller file size.
+SOURCE: https://cloudinary.com/documentation/assets_onboarding_transformations_tutorial
+
+LANGUAGE: HTTP
+CODE:
+```
+https://res.cloudinary.com/dam-fashion/video/upload/f_auto,q_auto,w_800/samples/elephants.mp4
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Automatic Format Selection (JavaScript)
+DESCRIPTION: Illustrates how to use `myImage.format('auto')` to instruct Cloudinary to automatically select the most optimized image format (e.g., AVIF, WebP) for each requesting browser. This enhances performance and user experience by delivering the best format supported by the client.
+SOURCE: https://cloudinary.com/documentation/react_image_transformations
+
+LANGUAGE: js
+CODE:
+```
+import {Cloudinary} from "@cloudinary/url-gen";
+
+// Create and configure your Cloudinary instance.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'demo'
+  }
+}); 
+
+// Use the image with public ID, 'docs/shoes'.
+const myImage = cld.image('docs/shoes');
+
+// Request automatic format.
+myImage.format('auto');
+
+// Return the delivery URL
+const myUrl = myImage.toURL();
+```
+
+----------------------------------------
+
+TITLE: Implementing Responsive Images with Cloudinary Node.js
+DESCRIPTION: This example illustrates how to deliver responsive images using Cloudinary's Node.js SDK by setting `dpr` and `width` attributes to `auto`. This ensures that images are delivered at the optimal size and device pixel ratio for the user's device, preventing unnecessary bandwidth usage.
+SOURCE: https://cloudinary.com/documentation/node_image_manipulation
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("myphoto", 
+  { transformation: [
+    { dpr: "auto", responsive: true, width: "auto", crop: "scale", angle: 20 }, 
+    { effect: "art:hokusai", border: "3px_solid_rgb:00390b", radius: 20 }
+  ]})
+```
+
+----------------------------------------
+
+TITLE: Cloudinary Automatic Format Selection (f_auto) Parameter
+DESCRIPTION: This section explains Cloudinary's `f_auto` parameter, which automatically detects the requesting browser to deliver the image in its most efficient format. This ensures optimal file format delivery for different browser capabilities.
+SOURCE: https://cloudinary.com/documentation/media_optimization
+
+LANGUAGE: APIDOC
+CODE:
+```
+Cloudinary's `f_auto` parameter:
+  - Purpose: Automatically detect the requesting browser and deliver the image in its most efficient format.
+  - Benefit: Ensures optimal file format delivery for different browser capabilities.
+```
+
+----------------------------------------
+
+TITLE: Replace img tags with Next.js Image Component
+DESCRIPTION: To leverage Next.js image optimization capabilities, import the `Image` component from `next/image` and replace standard `<img>` tags with the `Image` component in your application. This allows Next.js to handle image optimization automatically, often requiring `width` and `height` props.
+SOURCE: https://cloudinary.com/documentation/nextjs_image_component_tutorial
+
+LANGUAGE: JavaScript
+CODE:
+```
+import Image from 'next/image';
+
+function MyComponent() {
+  return (
+    <div>
+      {/* Example of replacing a standard <img> tag */}
+      {/* Before: <img src="/my-image.jpg" alt="My Image" /> */}
+      <Image src="/my-image.jpg" alt="My Image" width={500} height={300} />
+    </div>
+  );
+}
+```
+
+----------------------------------------
+
+TITLE: Deliver Image with Automatic Format Selection (JavaScript)
+DESCRIPTION: Shows how to instruct Cloudinary to automatically select the most optimized image format (e.g., AVIF, WebP) for each requesting browser by setting the 'format' action to 'auto'. This ensures efficient delivery based on browser capabilities.
+SOURCE: https://cloudinary.com/documentation/react_native_image_transformations
+
+LANGUAGE: JavaScript
+CODE:
+```
+import {Cloudinary} from "@cloudinary/url-gen";
+
+// Create and configure your Cloudinary instance.
+const cld = new Cloudinary({
+  cloud: {
+    cloudName: 'demo'
+  }
+}); 
+
+// Use the image with public ID, 'docs/shoes'.
+const myImage = cld.image('docs/shoes');
+
+// Request automatic format.
+myImage.format('auto');
+
+// Return the delivery URL
+const myUrl = myImage.toURL();
+```
+
+----------------------------------------
+
+TITLE: Optimize Video Quality Automatically in React
+DESCRIPTION: This snippet demonstrates how to use the Cloudinary React SDK to automatically optimize video quality. By setting the `quality` method to `auto` on the `cld.video` instance, the video is delivered with the best encoding to minimize file size without impacting visual quality. This helps improve page performance and user experience.
+SOURCE: https://cloudinary.com/documentation/optimize_videos_in_react_tutorial
+
+LANGUAGE: React
+CODE:
+```
+<video
+  src={cld.video('video/cooking-stirfry').quality('auto').toURL()}
+/>
+```
+
+----------------------------------------
+
+TITLE: Set Audio Bitrate for Optimization Across Platforms
+DESCRIPTION: This code demonstrates how to use the `bit_rate` parameter to control the maximum bitrate of an audio file, thereby optimizing its size and quality. The example sets the bitrate to `50k` for the `fireflywav.mp3` audio snippet, reducing its file size when delivered as an MP3.
+SOURCE: https://cloudinary.com/documentation/audio_optimization
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.url("docs/fireflywav.mp3", {bit_rate: "50k", resource_type: "video"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3").transcode(bitRate("50k"));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3").transcode(bitRate("50k"));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3").transcode(bitRate("50k"));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3").transcode(bitRate("50k"));
+```
+
+LANGUAGE: python
+CODE:
+```
+cloudinary.utils.cloudinary_url("docs/fireflywav.mp3", bit_rate="50k", resource_type="video")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new VideoTag('docs/fireflywav.mp3'))
+	->transcode(Transcode::bitRate("50k"));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().bitRate("50k")).resourceType("video").generate("docs/fireflywav.mp3")
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cloudinary_url("docs/fireflywav.mp3", bit_rate: "50k", resource_type: "video")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation().BitRate("50k")).BuildUrl("docs/fireflywav.mp3")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.video('docs/fireflywav.mp3').transformation(Transformation()
+	.transcode(Transcode.bitRate("50k")));
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation().setBitRate("50k")).generate("docs/fireflywav.mp3")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().bitRate("50k")).resourceType("video").generate("docs/fireflywav.mp3");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.video('docs/fireflywav.mp3').transformation(Transformation()
+	.transcode(Transcode.bitRate("50k")));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.video {
+	publicId("docs/fireflywav.mp3")
+	 transcode(Transcode.bitRate("50k")) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.url("docs/fireflywav.mp3", {bit_rate: "50k", resource_type: "video"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryVideo("docs/fireflywav.mp3").transcode(bitRate("50k"));
+```
+
+----------------------------------------
+
+TITLE: Optimizing Video Quality Automatically (React)
+DESCRIPTION: This React example shows how to use the `quality('auto')` method with `cld.video` to automatically optimize the quality and file size of a video delivered via Cloudinary. This ensures the best encoding without impacting visual quality.
+SOURCE: https://cloudinary.com/documentation/react_video_transformations
+
+LANGUAGE: react
+CODE:
+```
+<video
+  src={cld.video('video/cooking-stirfry').quality('auto').toURL()}
+/>
+```
+
+----------------------------------------
+
+TITLE: Deliver animated image from video using fl_animated flag
+DESCRIPTION: This snippet demonstrates how to deliver an animated image from an MP4 video using Cloudinary's `fl_animated` flag and `f_auto` for optimal format selection. It scales the image to a width of 250 pixels.
+SOURCE: https://cloudinary.com/documentation/videos_to_animated_images
+
+LANGUAGE: Node.js
+CODE:
+```
+cloudinary.image("dog.gif", {resource_type: "video", transformation: [
+  {width: 250, crop: "scale"},
+  {flags: "animated", fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: React
+CODE:
+```
+new CloudinaryImage("dog.gif")
+  .resize(scale().width(250))
+  .transcode(toAnimated("auto"))
+  .setAssetType("video");
+```
+
+LANGUAGE: Vue.js
+CODE:
+```
+new CloudinaryImage("dog.gif")
+  .resize(scale().width(250))
+  .transcode(toAnimated("auto"))
+  .setAssetType("video");
+```
+
+LANGUAGE: Angular
+CODE:
+```
+new CloudinaryImage("dog.gif")
+  .resize(scale().width(250))
+  .transcode(toAnimated("auto"))
+  .setAssetType("video");
+```
+
+LANGUAGE: JavaScript
+CODE:
+```
+new CloudinaryImage("dog.gif")
+  .resize(scale().width(250))
+  .transcode(toAnimated("auto"))
+  .setAssetType("video");
+```
+
+LANGUAGE: Python
+CODE:
+```
+CloudinaryVideo("dog.gif").image(transformation=[
+  {'width': 250, 'crop': "scale"},
+  {'flags': "animated", 'fetch_format': "auto"}
+  ])
+```
+
+LANGUAGE: PHP
+CODE:
+```
+(new ImageTag('dog.gif'))
+	->resize(Resize::scale()->width(250))
+	->transcode(Transcode::toAnimated(
+	AnimatedFormat::auto()))
+	->assetType("video");
+```
+
+LANGUAGE: Java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .width(250).crop("scale").chain()
+  .flags("animated").fetchFormat("auto")).resourceType("video").imageTag("dog.gif");
+```
+
+LANGUAGE: Ruby
+CODE:
+```
+cl_image_tag("dog.gif", resource_type: "video", transformation: [
+  {width: 250, crop: "scale"},
+  {flags: "animated", fetch_format: "auto"}
+  ])
+```
+
+LANGUAGE: C#
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation()
+  .Width(250).Crop("scale").Chain()
+  .Flags("animated").FetchFormat("auto")).BuildImageTag("dog.gif")
+```
+
+LANGUAGE: Dart
+CODE:
+```
+cloudinary.image('dog.gif').transformation(Transformation()
+	.addTransformation("c_scale,w_250/f_auto,fl_animated")
+	.setAssetType("video"));
+```
+
+LANGUAGE: Swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation()
+  .setWidth(250).setCrop("scale").chain()
+  .setFlags("animated").setFetchFormat("auto")).generate("dog.gif")
+```
+
+LANGUAGE: Android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation()
+  .width(250).crop("scale").chain()
+  .flags("animated").fetchFormat("auto")).resourceType("video").generate("dog.gif");
+```
+
+LANGUAGE: Flutter
+CODE:
+```
+cloudinary.image('dog.gif').transformation(Transformation()
+	.addTransformation("c_scale,w_250/f_auto,fl_animated")
+	.setAssetType("video"));
+```
+
+LANGUAGE: Kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("dog.gif")
+	 resize(Resize.scale() { width(250) })
+	 transcode(Transcode.toAnimated(
+	AnimatedFormat.auto()))
+	 assetType("video") 
+}.generate()
+```
+
+LANGUAGE: jQuery
+CODE:
+```
+$.cloudinary.image("dog.gif", {resource_type: "video", transformation: [
+  {width: 250, crop: "scale"},
+  {flags: "animated", fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: React Native
+CODE:
+```
+new CloudinaryImage("dog.gif")
+  .resize(scale().width(250))
+  .transcode(toAnimated("auto"))
+  .setAssetType("video");
+```
+
+----------------------------------------
+
+TITLE: Retrieve Cloudinary Asset by SKU and Generate Optimized URL for PDP
+DESCRIPTION: This example creates a delivery URL for an asset by searching for its SKU stored in a metadata field. It then applies the 'pdp_product_images' named transformation to optimize the image for a Product Display Page (PDP).
+SOURCE: https://cloudinary.com/documentation/ecommerce_workflows_product
+
+LANGUAGE: ruby
+CODE:
+```
+require 'cloudinary'
+
+def get_public_id_by_sku(sku)
+  result = Cloudinary::Search.expression("metadata.sku=#{sku}").execute
+  if result["resources"].any?
+    public_id = result["resources"][0]["public_id"]
+    image_url = Cloudinary::Utils.cloudinary_url(public_id, transformation: "pdp_product_images")
+    return image_url
+  end
+  nil
+end
+
+image_url = get_public_id_by_sku("product_sku_123")
+```
+
+LANGUAGE: php
+CODE:
+```
+use Cloudinary\Api\Search\SearchApi;
+use Cloudinary\Utils;
+
+function getPublicIdBySKU($sku) {
+    $api = new SearchApi();
+    $result = $api->expression("metadata.sku=$sku")->execute();
+    if (count($result['resources']) > 0) {
+        $publicId = $result['resources'][0]['public_id'];
+        return Utils::cloudinary_url($publicId, ['transformation' => 'pdp_product_images']);
+    }
+    return null;
+}
+
+$imageUrl = getPublicIdBySKU("product_sku_123");
+```
+
+LANGUAGE: python
+CODE:
+```
+import cloudinary.search
+import cloudinary.utils
+
+def get_public_id_by_sku(sku):
+    result = cloudinary.search.Search().expression(f"metadata.sku={sku}").execute()
+    if result["resources"]:
+        public_id = result["resources"][0]["public_id"]
+        return cloudinary.utils.cloudinary_url(public_id, transformation="pdp_product_images")[0]
+    return None
+
+image_url = get_public_id_by_sku("product_sku_123")
+```
+
+LANGUAGE: nodejs
+CODE:
+```
+const cloudinary = require('cloudinary').v2;
+
+async function getPublicIdBySKU(sku) {
+  try {
+    const result = await cloudinary.search.expression(`metadata.sku=${sku}`).execute();
+    if (result.resources.length > 0) {
+      const publicId = result.resources[0].public_id;
+      return cloudinary.url(publicId, { transformation: 'pdp_product_images' });
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+const imageUrl = await getPublicIdBySKU('product_sku_123');
+```
+
+LANGUAGE: java
+CODE:
+```
+import com.cloudinary.Cloudinary;
+import com.cloudinary.api.ApiResponse;
+import java.util.Map;
+
+public class CloudinaryUtils {
+    public static String getPublicIdBySKU(Cloudinary cloudinary, String sku) {
+        try {
+            ApiResponse result = cloudinary.search()
+                .expression("metadata.sku=" + sku)
+                .execute();
+            if (!((Map<?, ?>) result.get("resources")).isEmpty()) {
+                String publicId = ((Map<?, ?>) ((Map<?, ?>) result.get("resources")).get(0)).get("public_id").toString();
+                return cloudinary.url().transformation("pdp_product_images").generate(publicId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+}
+
+String imageUrl = CloudinaryUtils.getPublicIdBySKU(cloudinary, "product_sku_123");
+```
+
+LANGUAGE: csharp
+CODE:
+```
+using CloudinaryDotNet.Actions;
+using CloudinaryDotNet;
+
+public class CloudinaryUtils {
+    public static string GetPublicIdBySKU(Cloudinary cloudinary, string sku) {
+        var searchParams = new SearchParams().Expression($"metadata.sku={sku}");
+        var result = cloudinary.Search(searchParams);
+        if (result.Resources.Length > 0) {
+            return cloudinary.Api.UrlImgUp.Transform(new Transformation().Named("pdp_product_images"))
+                .BuildUrl(result.Resources[0].PublicId);
+        }
+        return null;
+    }
+}
+
+string imageUrl = CloudinaryUtils.GetPublicIdBySKU(cloudinary, "product_sku_123");
+```
+
+LANGUAGE: go
+CODE:
+```
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/cloudinary/cloudinary-go/v2/api/search"
+)
+
+func getPublicIdBySKU(cld *cloudinary.Cloudinary, sku string) (string, error) {
+	ctx := context.Background()
+	result, err := cld.Search.Search(&search.Params{
+		Expression: fmt.Sprintf("metadata.sku=%s", sku),
+	}).Execute(ctx)
+	if err != nil {
+		return "", err
+	}
+	if len(result.Resources) > 0 {
+		publicId := result.Resources[0].PublicId
+		imageUrl := cld.Url(publicId).Transformation("pdp_product_images").String()
+		return imageUrl, nil
+	}
+	return "", nil
+}
+
+imageUrl, err := getPublicIdBySKU(cld, "product_sku_123")
+if err != nil {
+	log.Println(err)
+}
+```
+
+----------------------------------------
+
+TITLE: Deliver Images with Automatic Format (`f_auto`) in Cloudinary
+DESCRIPTION: This snippet demonstrates how to deliver an image using Cloudinary's `f_auto` (automatic format) parameter. This approach allows Cloudinary to serve the optimal image format based on the requesting browser, without needing to specify a file extension in the URL. Note that `f_auto` is converted to relevant formats on the CDN level and does not eagerly generate all derived assets.
+SOURCE: https://cloudinary.com/documentation/eager_and_incoming_transformations
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("sample", {fetch_format: "auto"})
+```
+
+LANGUAGE: react
+CODE:
+```
+new CloudinaryImage("sample").delivery(format(auto()));
+```
+
+LANGUAGE: vue
+CODE:
+```
+new CloudinaryImage("sample").delivery(format(auto()));
+```
+
+LANGUAGE: angular
+CODE:
+```
+new CloudinaryImage("sample").delivery(format(auto()));
+```
+
+LANGUAGE: js
+CODE:
+```
+new CloudinaryImage("sample").delivery(format(auto()));
+```
+
+LANGUAGE: python
+CODE:
+```
+CloudinaryImage("sample").image(fetch_format="auto")
+```
+
+LANGUAGE: php
+CODE:
+```
+(new ImageTag('sample'))
+	->delivery(Delivery::format(
+	Format::auto()));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().fetchFormat("auto")).imageTag("sample");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("sample", fetch_format: "auto")
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlImgUp.Transform(new Transformation().FetchFormat("auto")).BuildImageTag("sample")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.image('sample').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: swift
+CODE:
+```
+imageView.cldSetImage(cloudinary.createUrl().setTransformation(CLDTransformation().setFetchFormat("auto")).generate("sample")!, cloudinary: cloudinary)
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation().fetchFormat("auto")).generate("sample");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.image('sample').transformation(Transformation()
+	.delivery(Delivery.format(
+	Format.auto())));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("sample")
+	 delivery(Delivery.format(
+	Format.auto())) 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("sample", {fetch_format: "auto"})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryImage("sample").delivery(format(auto()));
+```
+
+----------------------------------------
+
+TITLE: Transform Cloudinary Videos with Auto Quality and Format
+DESCRIPTION: These code snippets illustrate how to apply common video transformations such as resizing (width: 500), automatic quality optimization ('q_auto'), and automatic format selection ('f_auto') to a Cloudinary video asset. They also show how to generate the corresponding delivery URL or HTML image/video tag using various SDKs.
+SOURCE: https://cloudinary.com/documentation/dev_kickstart_optimize
+
+LANGUAGE: php
+CODE:
+```
+->delivery(Delivery::format(
+	Format::auto()))
+	->assetType("video");
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .width(500).crop("scale").chain()
+  .quality("auto").chain()
+  .fetchFormat("auto")).resourceType("video").imageTag("samples/cld-sample-video");
+```
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("samples/cld-sample-video", resource_type: "video", transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ])
+```
+
+LANGUAGE: csharp
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation()
+  .Width(500).Crop("scale").Chain()
+  .Quality("auto").Chain()
+  .FetchFormat("auto")).BuildImageTag("samples/cld-sample-video")
+```
+
+LANGUAGE: dart
+CODE:
+```
+cloudinary.image('samples/cld-sample-video').transformation(Transformation()
+	.resize(Resize.scale().width(500))
+	.delivery(Delivery.quality(
+	Quality.auto()))
+	.delivery(Delivery.format(
+	Format.auto()))
+	.setAssetType("video"));
+```
+
+LANGUAGE: swift
+CODE:
+```
+cloudinary.createUrl().setResourceType("video").setTransformation(CLDTransformation()
+  .setWidth(500).setCrop("scale").chain()
+  .setQuality("auto").chain()
+  .setFetchFormat("auto")).generate("samples/cld-sample-video")
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().url().transformation(new Transformation()
+  .width(500).crop("scale").chain()
+  .quality("auto").chain()
+  .fetchFormat("auto")).resourceType("video").generate("samples/cld-sample-video");
+```
+
+LANGUAGE: flutter
+CODE:
+```
+cloudinary.image('samples/cld-sample-video').transformation(Transformation()
+	.resize(Resize.scale().width(500))
+	.delivery(Delivery.quality(
+	Quality.auto()))
+	.delivery(Delivery.format(
+	Format.auto()))
+	.setAssetType("video"));
+```
+
+LANGUAGE: kotlin
+CODE:
+```
+cloudinary.image {
+	publicId("samples/cld-sample-video")
+	 resize(Resize.scale() { width(500) })
+	 delivery(Delivery.quality(
+	Quality.auto()))
+	 delivery(Delivery.format(
+	Format.auto()))
+	 assetType("video") 
+}.generate()
+```
+
+LANGUAGE: jquery
+CODE:
+```
+$.cloudinary.image("samples/cld-sample-video", {resource_type: "video", transformation: [
+  {width: 500, crop: "scale"},
+  {quality: "auto"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: react_native
+CODE:
+```
+new CloudinaryImage("samples/cld-sample-video")
+  .resize(scale().width(500))
+  .delivery(quality(auto()))
+  .delivery(format(auto()))
+  .setAssetType("video");
+```
+
+----------------------------------------
+
+TITLE: Implement Responsive Image Delivery (JavaScript)
+DESCRIPTION: This JavaScript example shows how to configure Cloudinary to deliver responsive images. Using `auto` for `dpr` and `width` attributes ensures that images are served at the optimal size and device pixel ratio for each user's device, improving performance and user experience.
+SOURCE: https://cloudinary.com/documentation/jquery_image_manipulation
+
+LANGUAGE: js
+CODE:
+```
+$.cloudinary.imageTag("myphoto")
+  .dpr("auto").responsive(true).width("auto").crop("scale").angle(20).chain()
+  .effect("art:hokusai").border("3px_solid_rgb:00390b").radius("20")
+```
+
+----------------------------------------
+
+TITLE: Apply Auto Format and Quality Optimization
+DESCRIPTION: Apply automatic format and quality optimizations to your image. Chaining `format("auto")` and `quality("auto")` methods ensures the image is delivered in the best format and with optimal compression for the requesting browser, minimizing file size while maintaining visual quality.
+SOURCE: https://cloudinary.com/documentation/javascript_configuration_in_svelte_tutorial
+
+LANGUAGE: javascript
+CODE:
+```
+myImage.format("auto").quality("auto")
+```
+
+----------------------------------------
+
+TITLE: Optimize PDF on Upload with Incoming Transformation
+DESCRIPTION: This code demonstrates how to optimize PDF files during the upload process using an incoming transformation. By setting the `quality` parameter to `auto`, Cloudinary automatically compresses the PDF, saving storage space. The compressed version is then stored in your product environment.
+SOURCE: https://cloudinary.com/documentation/pdf_optimization
+
+LANGUAGE: ruby
+CODE:
+```
+Cloudinary::Uploader.upload("39_Acacia_Road_Brochure_incoming.pdf", 
+  quality: "auto")
+```
+
+LANGUAGE: php_2
+CODE:
+```
+$cloudinary->uploadApi()->upload("39_Acacia_Road_Brochure_incoming.pdf", 
+  ["quality" => "auto"]);
+```
+
+LANGUAGE: php
+CODE:
+```
+\Cloudinary\Uploader::upload("39_Acacia_Road_Brochure_incoming.pdf", 
+  ["quality" => "auto"]);
+```
+
+LANGUAGE: python
+CODE:
+```
+cloudinary.uploader.upload("39_Acacia_Road_Brochure_incoming.pdf", 
+  "quality" = "auto")
+```
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.v2.uploader
+.upload("39_Acacia_Road_Brochure_incoming.pdf",
+  { quality: "auto" })
+.then(result=>console.log(result));
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.uploader().upload("39_Acacia_Road_Brochure_incoming.pdf",
+  ObjectUtils.asMap("transformation", 
+    new Transformation().quality("auto")));
+```
+
+LANGUAGE: csharp
+CODE:
+```
+var uploadParams = new ImageUploadParams() {
+  File = new FileDescription(@"39_Acacia_Road_Brochure_incoming.pdf"),
+  Transformation = new Transformation().Quality("auto")};
+var uploadResult = cloudinary.Upload(uploadParams);
+```
+
+LANGUAGE: go
+CODE:
+```
+resp, err := cld.Upload.Upload(ctx, "39_Acacia_Road_Brochure_incoming.pdf", uploader.UploadParams{
+		Transformation: "q_auto"})
+```
+
+LANGUAGE: android
+CODE:
+```
+MediaManager.get().upload("39_Acacia_Road_Brochure_incoming.pdf")
+  .option("transformation", new Transformation().quality("auto")).dispatch();
+```
+
+LANGUAGE: swift
+CODE:
+```
+let params = CLDUploadRequestParams()
+  .setTransformation(
+    CLDTransformation().setQuality("auto"))
+var mySig = MyFunction(params)  // your own function that returns a signature generated on your backend
+params.setSignature(CLDSignature(signature: mySig.signature, timestamp: mySig.timestamp))
+let request = cloudinary.createUploader().signedUpload(
+  url: "39_Acacia_Road_Brochure_incoming.pdf", params: params)
+```
+
+LANGUAGE: cli
+CODE:
+```
+cld uploader upload 39_Acacia_Road_Brochure_incoming.pdf transformation='[{"quality": "auto"}]'
+```
+
+LANGUAGE: curl
+CODE:
+```
+curl https://api.cloudinary.com/v1_1/demo/image/upload -X POST --data 'file=39_Acacia_Road_Brochure_incoming.pdf&transformation=q_auto&timestamp=173719931&api_key=436464676&signature=a788d68f86a6f868af'
+```
+
+----------------------------------------
+
+TITLE: Deliver animated image from video using f_auto:animated option
+DESCRIPTION: This snippet shows an alternative method to deliver an animated image from an MP4 video using Cloudinary's `f_auto:animated` option for optimal format selection. It scales the image to a width of 250 pixels.
+SOURCE: https://cloudinary.com/documentation/videos_to_animated_images
+
+LANGUAGE: Node.js
+CODE:
+```
+cloudinary.image("dog", {resource_type: "video", transformation: [
+  {width: 250, crop: "scale"},
+  {fetch_format: "auto"}
+  ]})
+```
+
+LANGUAGE: React
+CODE:
+```
+new CloudinaryImage('dog')
+	.resize(scale().width(250))
+	.delivery(format(
+	auto:animated()))
+	.setAssetType("video");
+```
+
+LANGUAGE: Vue.js
+CODE:
+```
+new CloudinaryImage('dog')
+	.resize(scale().width(250))
+	.delivery(format(
+	auto:animated()))
+	.setAssetType("video");
+```
+
+LANGUAGE: Angular
+CODE:
+```
+new CloudinaryImage('dog')
+	.resize(scale().width(250))
+	.delivery(format(
+	auto:animated()))
+	.setAssetType("video");
+```
+
+LANGUAGE: JavaScript
+CODE:
+```
+new CloudinaryImage('dog')
+	.resize(scale().width(250))
+	.delivery(format(
+	auto:animated()))
+	.setAssetType("video");
+```
+
+LANGUAGE: Python
+CODE:
+```
+CloudinaryVideo("dog").image(transformation=[
+  {'width': 250, 'crop': "scale"},
+  {'fetch_format': "auto"}
+  ])
+```
+
+LANGUAGE: PHP
+CODE:
+```
+(new ImageTag('dog'))
+	->resize(Resize::scale()->width(250))
+	->delivery(Delivery::format(
+	Format::auto:animated()))
+	->assetType("video");
+```
+
+LANGUAGE: Java
+CODE:
+```
+cloudinary.url().transformation(new Transformation()
+  .width(250).crop("scale").chain()
+  .fetchFormat("auto")).resourceType("video").imageTag("dog");
+```
+
+LANGUAGE: Ruby
+CODE:
+```
+cl_image_tag("dog", resource_type: "video", transformation: [
+  {width: 250, crop: "scale"},
+  {fetch_format: "auto"}
+  ])
+```
+
+LANGUAGE: C#
+CODE:
+```
+cloudinary.Api.UrlVideoUp.Transform(new Transformation()
+  .Width(250).Crop("scale").Chain()
+```
+
+----------------------------------------
+
+TITLE: Resize Image with f_auto, q_auto, and specific dimensions
+DESCRIPTION: Shows how to combine `f_auto`, `q_auto`, and resizing parameters (`w_800,c_fill`) in an image delivery URL to optimize and resize the image. This further reduces the file size while ensuring the image fits specified dimensions.
+SOURCE: https://cloudinary.com/documentation/assets_onboarding_transformations_tutorial
+
+LANGUAGE: HTTP
+CODE:
+```
+https://res.cloudinary.com/dam-fashion/image/upload/f_auto,q_auto,w_800,c_fill/actfefhwqpv3i9gkb084.jpg
+```
+
+----------------------------------------
+
+TITLE: Applying Image Overlays for Branding and Watermarking
+DESCRIPTION: Demonstrates a Cloudinary named transformation (`cloudinary_logo`) that applies an image overlay. The transformation scales a logo, adjusts its opacity and brightness, and positions it in the top-right corner of the base image or video, serving as a watermark.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+l_cloudinary_icon_blue/c_scale,w_0.5/o_70/e_brightness:50/fl_layer_apply,g_north_east
+```
+
+----------------------------------------
+
+TITLE: Focusing on Specific Objects with AI Content Analysis
+DESCRIPTION: Illustrates how to use Cloudinary's AI Content Analysis add-on to automatically crop and focus on specific objects within an image. By specifying `g_auto:box` or `g_auto:ring`, the transformation intelligently crops around the detected object, maintaining specified dimensions.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+w_550,h_450,c_crop,g_auto:box/f_auto/q_auto
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+w_500,h_500,c_auto,g_auto:ring/f_auto/q_auto
+```
+
+----------------------------------------
+
+TITLE: Cropping and Resizing Assets for Different Contexts
+DESCRIPTION: Examples of Cloudinary transformation strings for cropping and resizing images based on their intended display context. The 'hero' transformation uses padding and AI-generated fill for a 16:9 aspect ratio, while the 'carousel' transformation auto-crops for a 1:1 aspect ratio, both optimized for a 2000px width.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+c_pad,b_gen_fill,ar_16:9,w_2000/f_auto/q_auto
+```
+
+LANGUAGE: Cloudinary Transformation Language
+CODE:
+```
+c_auto,g_auto,ar_1:1,w_2000/f_auto/q_auto
+```
+
+----------------------------------------
+
+TITLE: Deliver Responsive Images with Auto DPR and Width (C#)
+DESCRIPTION: This example shows how to configure Cloudinary to deliver responsive images by setting `dpr` and `width` attributes to `auto`. This ensures that users receive images at the optimal size and device pixel ratio based on their screen properties and viewport, preventing unnecessary bandwidth usage.
+SOURCE: https://cloudinary.com/documentation/dotnet_image_manipulation
+
+LANGUAGE: csharp
+CODE:
+```
+@Model.Cloudinary.Api.UrlImgUp.Transform(
+  new Transformation().Width("auto").Dpr("auto").IsResponsive(True).Crop("scale").Angle(20))
+  .BuildImageTag("sample.jpg");
+```
+
+----------------------------------------
+
+TITLE: Deliver Responsive Images using HTML srcset and Cloudinary Transformations
+DESCRIPTION: This snippet demonstrates how to implement responsive images using HTML's `srcset` and `sizes` attributes in conjunction with Cloudinary's dynamic image transformations. It allows the browser to select the most appropriate image size based on the viewport, optimizing bandwidth and load times for different devices.
+SOURCE: https://cloudinary.com/documentation/ecommerce_best_practices
+
+LANGUAGE: HTML
+CODE:
+```
+<img
+  sizes="(min-width: 50em) 50em, 100vw"
+  srcset="https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_256/docs/house.jpg 256w,
+          https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_512/docs/house.jpg 512w,
+          https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_768/docs/house.jpg 768w,
+          https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_1024/docs/house.jpg 1024w,
+          https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_1280/docs/house.jpg 1280w"
+  src="https://res.cloudinary.com/demo/image/upload/f_auto/q_auto/c_scale,w_512/docs/house.jpg"
+  alt="Responsive house" />
+```
+
+----------------------------------------
+
+TITLE: Deliver Responsive Images with Client-Hints using SDKs
+DESCRIPTION: This code demonstrates how to use Cloudinary SDKs to deliver the `sample` image, automatically scaled to the width available in the responsive layout. By setting `width: "auto"` and `client_hints: "true"`, Cloudinary leverages Client-Hints to optimize image delivery at the CDN level. The `sizes` attribute is crucial for the `Sec-CH-Width` hint.
+SOURCE: https://cloudinary.com/documentation/responsive_server_side_client_hints
+
+LANGUAGE: ruby
+CODE:
+```
+cl_image_tag("sample.jpg", width: "auto", client_hints: "true", crop: "limit",
+  sizes: "100vw")
+```
+
+LANGUAGE: php
+CODE:
+```
+cl_image_tag("sample.jpg",  ["width" => "auto", "client_hints" => "true",
+  "crop" => "limit", "sizes" => "100vw"]);
+```
+
+LANGUAGE: python
+CODE:
+```
+cloudinary.CloudinaryImage("sample.jpg").image(width = "auto", crop = "limit",
+  client_hints = True, sizes = "100vw")
+```
+
+LANGUAGE: nodejs
+CODE:
+```
+cloudinary.image("sample.jpg",  { width: "auto", client_hints: "true", crop: "limit",
+  sizes: "100vw" })
+```
+
+LANGUAGE: java
+CODE:
+```
+cloudinary.url().transformation(new Transformation().width("auto").client_hints("true").crop("limit").sizes("100vw")).imageTag("sample.jpg");
+```
+
+----------------------------------------
+
+TITLE: Resize Video for Tablets with Auto Cropping
+DESCRIPTION: Provides an example of resizing a video for tablets (1080px width, 1:1 aspect ratio) using c_fill and g_auto. This transformation adapts the video content to fit a square format while maintaining focus on the primary subject.
+SOURCE: https://cloudinary.com/documentation/ecommerce_optimize_customize
+
+LANGUAGE: Cloudinary Transformation String
+CODE:
+```
+ar_1:1,c_fill,g_auto,w_1080
+```
