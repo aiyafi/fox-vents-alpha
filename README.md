@@ -1,64 +1,80 @@
-# Minimal post viewer
+# 🦊 Fox Vents Alpha
 
-*Automatically synced with your [v0.dev](https://v0.dev) deployments*
+**Fox Vents** is a minimalist, anonymous post viewer — built for personal venting (K9Fox), reflection, or just dropping crumbs of thought. No likes, no comments, no judgment.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/aiyafis-projects/v0-minimal-post-viewer)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.dev-black?style=for-the-badge)](https://v0.dev/chat/projects/eic163kQzi0)
+---
 
-## Overview
+## ✨ What It Is
 
-This repository will stay in sync with your deployed chats on [v0.dev](https://v0.dev).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.dev](https://v0.dev).
+A two-part app:
 
-## Deployment
+- **Viewer** → Public, read-only post feed
+- **Dashboard** → Private, authenticated space for creating posts (only accessible to K9Fox)
 
-Your project is live at:
+Each post can contain text + optional media (image or video). Every post has its own unique link for sharing.
 
-**[https://vercel.com/aiyafis-projects/v0-minimal-post-viewer](https://vercel.com/aiyafis-projects/v0-minimal-post-viewer)**
+---
 
-## Build your app
+## 🔧 Tech Stack
 
-Continue building your app on:
+- **Next.js** (App Router)
+- **React + TypeScript**
+- **TailwindCSS + ShadCN UI**
+- **Firebase** (Firestore for data)
+- **Cloudinary** (media upload)
+- **Vercel** (deployment)
 
-**[https://v0.dev/chat/projects/eic163kQzi0](https://v0.dev/chat/projects/eic163kQzi0)**
+---
 
-## How It Works
+## 📁 Folder Overview
 
-1. Create and modify your project using [v0.dev](https://v0.dev)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
 ```
-fox-vents-alpha
-├─ app
-│  ├─ globals.css
-│  ├─ layout.tsx
-│  └─ page.tsx
-├─ components
-│  ├─ navbar.tsx
-│  ├─ post-feed.tsx
-│  ├─ post.tsx
-│  ├─ theme-provider.tsx
-│  ├─ theme-toggle.tsx
-│  └─ ui
-│     └─ button.tsx
-├─ components.json
-├─ lib
-│  └─ utils.ts
-├─ next.config.mjs
-├─ package.json
-├─ pnpm-lock.yaml
-├─ postcss.config.mjs
-├─ public
-│  ├─ placeholder-logo.png
-│  ├─ placeholder-logo.svg
-│  ├─ placeholder-user.jpg
-│  ├─ placeholder.jpg
-│  └─ placeholder.svg
-├─ README.md
-├─ styles
-│  └─ globals.css
-├─ tailwind.config.ts
-└─ tsconfig.json
+fox-vents-alpha/
+├─ app/ # Next.js App Router structure
+│ └─ post/[id]/ # Individual post route
+├─ components/ # UI & logic components (Feed, Navbar, Theme, etc.)
+├─ lib/ # Cloudinary, Firebase, Firestore utilities
+├─ public/ # Static assets & placeholders
+├─ styles/ # Global Tailwind styles
+├─ .copilot/ # Internal config helpers
+```
 
+
+---
+
+## 🚀 How to Run
+
+```bash
+# Install dependencies
+pnpm install
+
+# Set up environment variables in `.env.local`
+# (Firebase + Cloudinary credentials)
+
+# Start the dev server
+pnpm dev
+```
+
+---
+
+## 🌐 Live
+
+* Viewer: [https://thoughts.yafff.tech](https://thoughts.yafff.tech)
+
+---
+
+## 🧠 Why This Exists
+
+Just a quiet corner of the web for me (K9Fox) to offload thoughts.
+Not a social platform. Not a blog. Just crumbs.
+*Rather than i post on my whatsapp status lol*
+
+---
+
+MIT License
+© 2025 K9Fox
+
+```
+
+Let me know if you want a separate section for environment variables or a version for the **dashboard repo** too.
 ```
