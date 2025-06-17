@@ -36,7 +36,6 @@ fox-vents-alpha/
 ├─ lib/ # Cloudinary, Firebase, Firestore utilities
 ├─ public/ # Static assets & placeholders
 ├─ styles/ # Global Tailwind styles
-├─ .copilot/ # Internal config helpers
 ```
 
 
