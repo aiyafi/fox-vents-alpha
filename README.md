@@ -8,7 +8,7 @@
 
 A two-part app:
 
-- **Viewer** → Public, read-only post feed
+- **Viewer** → Public, read-only post feed (this repo)
 - **Dashboard** → Private, authenticated space for creating posts (only accessible to K9Fox)
 
 Each post can contain text + optional media (image or video). Every post has its own unique link for sharing.
