@@ -8,7 +8,7 @@
 
 A two-part app:
 
-- **Viewer** → Public, read-only post feed
+- **Viewer** → Public, read-only post feed (this repo)
 - **Dashboard** → Private, authenticated space for creating posts (only accessible to K9Fox)
 
 Each post can contain text + optional media (image or video). Every post has its own unique link for sharing.
@@ -36,7 +36,6 @@ fox-vents-alpha/
 ├─ lib/ # Cloudinary, Firebase, Firestore utilities
 ├─ public/ # Static assets & placeholders
 ├─ styles/ # Global Tailwind styles
-├─ .copilot/ # Internal config helpers
 ```
 
 
@@ -67,7 +66,7 @@ pnpm dev
 
 Just a quiet corner of the web for me (K9Fox) to offload thoughts.
 Not a social platform. Not a blog. Just crumbs.
-*Rather than i post on my whatsapp status lol*
+*Better than spamming my WhatsApp status or posting on Instagram lmao*
 
 ---
 
