@@ -66,7 +66,7 @@ pnpm dev
 
 Just a quiet corner of the web for me (K9Fox) to offload thoughts.
 Not a social platform. Not a blog. Just crumbs.
-*Rather than i post on my whatsapp status lol*
+*Better than spamming my WhatsApp status or posting on Instagram lmao*
 
 ---
 
