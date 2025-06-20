@@ -112,3 +112,37 @@ html.lenis, html.lenis body {
 .theme-transition-disable * {
   transition: none !important;
 }
+
+/* Markdown styles for better typography */
+.markdown-content {
+  line-height: 1.6;
+}
+
+.markdown-content pre {
+  @apply bg-muted p-4 rounded-lg overflow-x-auto text-sm;
+}
+
+.markdown-content code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.markdown-content table {
+  @apply w-full border-collapse border border-border my-4;
+}
+
+.markdown-content th,
+.markdown-content td {
+  @apply border border-border px-3 py-2 text-left;
+}
+
+.markdown-content th {
+  @apply bg-muted font-medium;
+}
+
+.markdown-content hr {
+  @apply border-border my-4;
+}

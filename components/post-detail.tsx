@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import { addLikedPost, removeLikedPost, isPostLiked } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
-import { LinkText } from "@/components/link-text"
+import { MarkdownText } from "@/components/markdown-text"
 
 interface PostDetailProps {
   post: PostWithTimestamp
@@ -133,7 +133,7 @@ export function PostDetail({ post }: PostDetailProps) {
         <div ref={contentRef} className="p-6 space-y-4">
           <div className="space-y-4">
             <div className="text-base leading-relaxed text-foreground">
-              <LinkText text={post.content} />
+              <MarkdownText>{post.content}</MarkdownText>
             </div>
 
             {post.imageUrl && (

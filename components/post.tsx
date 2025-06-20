@@ -6,10 +6,9 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import { useRouter } from 'next/navigation'
-import { formatTimestamp, type Post as PostType } from "@/lib/data"
-import { isPostLiked, addLikedPost, removeLikedPost, getTotalLikes, incrementLikes, decrementLikes } from "@/lib/storage"
+import { isPostLiked, addLikedPost, removeLikedPost } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
-import { LinkText } from "@/components/link-text"
+import { MarkdownText } from "@/components/markdown-text"
 
 interface PostProps {
   post: PostWithTimestamp
@@ -91,9 +90,9 @@ export function Post({ post }: PostProps) {
       onClick={handlePostClick}
     >
       <div className="p-6 space-y-3">
-        {/* Content with clickable links */}
+        {/* Content with markdown support */}
         <div className="text-sm leading-relaxed text-foreground/90">
-          <LinkText text={post.content} />
+          <MarkdownText>{post.content}</MarkdownText>
         </div>
 
         {/* Media */}
