@@ -20,6 +20,7 @@ Each post can contain text + optional media (image or video). Every post has its
 - **Next.js** (App Router)
 - **React + TypeScript**
 - **TailwindCSS + ShadCN UI**
+- **react-markdown** (Markdown rendering)
 - **Firebase** (Firestore for data)
 - **Cloudinary** (media upload)
 - **Vercel** (deployment)
