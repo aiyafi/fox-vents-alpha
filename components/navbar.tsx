@@ -15,10 +15,10 @@ export function Navbar() {
         </Link>
         
         <div className="flex items-center space-x-3">
-          <ThemeToggle />
           <Link href="https://thoughtsboard.yafff.tech/" target="_blank">
             <SquareUserRound className="w-6 h-6 text-muted-foreground hover:text-foreground transition-colors" />
           </Link>
+          <ThemeToggle />
         </div>
       </div>
     </header>
