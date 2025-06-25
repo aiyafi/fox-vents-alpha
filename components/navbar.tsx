@@ -1,8 +1,7 @@
 "use client"
 
 import { ThemeToggle } from "@/components/theme-toggle"
-// atau gunakan yang advanced:
-// import { ThemeToggleAdvanced as ThemeToggle } from "@/components/theme-toggle-advanced"
+import { SquareUserRound } from "lucide-react"
 import Link from 'next/link'
 
 export function Navbar() {
@@ -15,6 +14,9 @@ export function Navbar() {
           </span>
         </Link>
         <ThemeToggle />
+        <Link href="https://thoughtsboard.yafff.tech/" target="_blank">
+          <SquareUserRound className="w-6 h-6" />
+        </Link>
       </div>
     </header>
   )
