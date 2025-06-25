@@ -13,10 +13,13 @@ export function Navbar() {
             Fox Thoughts
           </span>
         </Link>
-        <ThemeToggle />
-        <Link href="https://thoughtsboard.yafff.tech/" target="_blank">
-          <SquareUserRound className="w-6 h-6" />
-        </Link>
+        
+        <div className="flex items-center space-x-3">
+          <ThemeToggle />
+          <Link href="https://thoughtsboard.yafff.tech/" target="_blank">
+            <SquareUserRound className="w-6 h-6 text-muted-foreground hover:text-foreground transition-colors" />
+          </Link>
+        </div>
       </div>
     </header>
   )
