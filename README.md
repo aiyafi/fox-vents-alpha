@@ -73,8 +73,3 @@ Not a social platform. Not a blog. Just crumbs.
 
 MIT License
 © 2025 K9Fox
-
-```
-
-Let me know if you want a separate section for environment variables or a version for the **dashboard repo** too.
-```
