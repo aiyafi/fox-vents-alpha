@@ -137,11 +137,15 @@ export function PostDetail({ post }: PostDetailProps) {
             </div>
 
             {post.imageUrl && (
-              <div className="pt-2">
+              <div className="pt-2 overflow-hidden">
                 <img
                   src={post.imageUrl}
                   alt=""
-                  className="w-full h-auto rounded-lg object-contain"
+                  data-image-id={`post-image-${post.id}`}
+                  className="w-full h-auto rounded-lg object-contain transition-all duration-500 ease-out"
+                  style={{ 
+                    animation: 'imageReveal 0.6s ease-out forwards',
+                  }}
                 />
               </div>
             )}

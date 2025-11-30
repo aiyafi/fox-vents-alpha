@@ -137,10 +137,8 @@ export function PostFeed() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       <div className="space-y-0">
-        {posts.map((post) => (
-          <div key={post.id} data-post-id={post.id}>
-            <Post post={post} />
-          </div>
+        {posts.map((post, index) => (
+          <Post key={post.id} post={post} data-post-id={post.id} isLast={index === posts.length - 1} />
         ))}
       </div>
 

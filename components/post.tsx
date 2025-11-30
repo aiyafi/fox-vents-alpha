@@ -12,9 +12,11 @@ import { MarkdownText } from "@/components/markdown-text"
 
 interface PostProps {
   post: PostWithTimestamp
+  'data-post-id'?: string
+  isLast?: boolean
 }
 
-export function Post({ post }: PostProps) {
+export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostProps) {
   const [liked, setLiked] = useState(() => isPostLiked(post.id))
   const cardRef = useRef<HTMLDivElement>(null)
   const router = useRouter()
@@ -47,46 +49,25 @@ export function Post({ post }: PostProps) {
   const handlePostClick = (e: React.MouseEvent) => {
     e.preventDefault()
 
-    if (!cardRef.current) return
+    // Navigate immediately - no blocking!
+    router.push(`/post/${post.id}`)
 
-    // Page exit animation
-    const tl = gsap.timeline({
-      onComplete: () => {
-        router.push(`/post/${post.id}`)
-      }
-    })
-
-    // Animate current post
-    tl.to(cardRef.current, {
-      scale: 1.02,
-      duration: 0.2,
-      ease: "power2.out"
-    })
-      .to(cardRef.current, {
-        opacity: 0.7,
-        duration: 0.1
-      }, "-=0.1")
-
-    // Animate other posts out
-    const otherPosts = document.querySelectorAll('[data-post-card]')
-    otherPosts.forEach((otherPost, index) => {
-      if (otherPost !== cardRef.current) {
-        gsap.to(otherPost, {
-          opacity: 0,
-          y: -10,
-          duration: 0.3,
-          delay: index * 0.02,
-          ease: "power2.out"
-        })
-      }
-    })
+    // Optional: Quick scale animation for feedback (non-blocking)
+    if (cardRef.current) {
+      gsap.to(cardRef.current, {
+        scale: 0.98,
+        duration: 0.15,
+        ease: "power2.out"
+      })
+    }
   }
 
   return (
     <Card
       ref={cardRef}
       data-post-card
-      className="border-0 shadow-none rounded-none border-b last:border-b-0 hover:bg-muted/20 transition-colors cursor-pointer overflow-x-hidden"
+      data-post-id={dataPostId}
+      className={`border-0 shadow-none rounded-none ${isLast ? '' : 'border-b'} hover:bg-muted/20 transition-colors cursor-pointer overflow-x-hidden`}
       onClick={handlePostClick}
     >
       <div className="p-6 space-y-3">
@@ -101,7 +82,9 @@ export function Post({ post }: PostProps) {
             <img
               src={post.imageUrl}
               alt=""
-              className="w-full rounded-md max-h-96 object-cover"
+              data-image-id={`post-image-${post.id}`}
+              className="w-full rounded-md max-h-96 object-cover transition-all duration-300"
+              loading="lazy"
             />
           </div>
         )}
