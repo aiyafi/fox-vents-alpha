@@ -160,3 +160,41 @@ html.lenis, html.lenis body {
     filter: blur(0);
   }
 }
+
+/* View Transitions API - Smooth page transitions */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+
+/* Smooth image morph between pages */
+::view-transition-old(post-image),
+::view-transition-new(post-image) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Fade transition for page content */
+::view-transition-old(root) {
+  animation: fade-out 0.3s ease-out;
+}
+
+::view-transition-new(root) {
+  animation: fade-in 0.3s ease-in;
+}
+
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}

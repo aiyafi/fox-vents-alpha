@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { isPostLiked, addLikedPost, removeLikedPost } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
 import { MarkdownText } from "@/components/markdown-text"
@@ -46,30 +47,16 @@ export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostP
     }
   }
 
-  const handlePostClick = (e: React.MouseEvent) => {
-    e.preventDefault()
 
-    // Navigate immediately - no blocking!
-    router.push(`/post/${post.id}`)
-
-    // Optional: Quick scale animation for feedback (non-blocking)
-    if (cardRef.current) {
-      gsap.to(cardRef.current, {
-        scale: 0.98,
-        duration: 0.15,
-        ease: "power2.out"
-      })
-    }
-  }
 
   return (
-    <Card
-      ref={cardRef}
-      data-post-card
-      data-post-id={dataPostId}
-      className={`border-0 shadow-none rounded-none ${isLast ? '' : 'border-b'} hover:bg-muted/20 transition-colors cursor-pointer overflow-x-hidden`}
-      onClick={handlePostClick}
-    >
+    <Link href={`/post/${post.id}`} className="block">
+      <Card
+        ref={cardRef}
+        data-post-card
+        data-post-id={dataPostId}
+        className={`border-0 shadow-none rounded-none ${isLast ? '' : 'border-b'} hover:bg-muted/20 transition-colors cursor-pointer overflow-x-hidden`}
+      >
       <div className="p-6 space-y-3">
         {/* Content with markdown support */}
         <div className="text-sm leading-relaxed text-foreground/90">
@@ -83,6 +70,7 @@ export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostP
               src={post.imageUrl}
               alt=""
               data-image-id={`post-image-${post.id}`}
+              style={{ viewTransitionName: `post-image-${post.id}` }}
               className="w-full rounded-md max-h-96 object-cover transition-all duration-300"
               loading="lazy"
             />
@@ -116,6 +104,7 @@ export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostP
           </time>
         </div>
       </div>
-    </Card>
+      </Card>
+    </Link>
   )
 }

@@ -142,10 +142,10 @@ export function PostDetail({ post }: PostDetailProps) {
                   src={post.imageUrl}
                   alt=""
                   data-image-id={`post-image-${post.id}`}
-                  className="w-full h-auto rounded-lg object-contain transition-all duration-500 ease-out"
                   style={{ 
-                    animation: 'imageReveal 0.6s ease-out forwards',
+                    viewTransitionName: `post-image-${post.id}`,
                   }}
+                  className="w-full h-auto rounded-lg object-contain transition-all duration-500 ease-out"
                 />
               </div>
             )}
