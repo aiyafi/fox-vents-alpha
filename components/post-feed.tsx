@@ -5,6 +5,8 @@ import { Post } from "@/components/post"
 import { PostFeedSkeleton } from "@/components/loading-skeleton"
 import { LoadingSpinner } from "@/components/loading-spinner"
 import { EndOfFeed } from "@/components/end-of-feed"
+import { PostModal } from "@/components/post-modal"
+import { PostModalProvider } from "@/contexts/post-modal-context"
 import { getInitialPosts, getNextPosts } from "@/lib/firestore"
 import { PostWithTimestamp } from "@/lib/types"
 import { useInfiniteScroll } from "@/hooks/use-infinite-scroll"
@@ -135,36 +137,41 @@ export function PostFeed() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="space-y-0">
-        {posts.map((post, index) => (
-          <Post key={post.id} post={post} data-post-id={post.id} isLast={index === posts.length - 1} />
-        ))}
+    <PostModalProvider>
+      <div className="w-full max-w-2xl mx-auto">
+        <div className="space-y-0">
+          {posts.map((post, index) => (
+            <Post key={post.id} post={post} data-post-id={post.id} isLast={index === posts.length - 1} />
+          ))}
+        </div>
+
+        {/* Sentinel element for infinite scroll */}
+        <div ref={sentinelRef} className="h-px" />
+
+        {/* Loading states */}
+        {loadingMore && <LoadingSpinner />}
+        
+        {/* Error state for batch loading */}
+        {error && posts.length > 0 && (
+          <div className="w-full flex justify-center items-center py-8">
+            <div className="flex flex-col items-center gap-2">
+              <p className="text-sm text-muted-foreground">{error}</p>
+              <button
+                onClick={loadMore}
+                className="text-sm text-primary hover:underline"
+              >
+                Try again
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* End of feed */}
+        {!hasMore && !loadingMore && <EndOfFeed />}
       </div>
 
-      {/* Sentinel element for infinite scroll */}
-      <div ref={sentinelRef} className="h-px" />
-
-      {/* Loading states */}
-      {loadingMore && <LoadingSpinner />}
-      
-      {/* Error state for batch loading */}
-      {error && posts.length > 0 && (
-        <div className="w-full flex justify-center items-center py-8">
-          <div className="flex flex-col items-center gap-2">
-            <p className="text-sm text-muted-foreground">{error}</p>
-            <button
-              onClick={loadMore}
-              className="text-sm text-primary hover:underline"
-            >
-              Try again
-            </button>
-          </div>
-        </div>
-      )}
-      
-      {/* End of feed */}
-      {!hasMore && !loadingMore && <EndOfFeed />}
-    </div>
+      {/* Expandable Post Modal */}
+      <PostModal />
+    </PostModalProvider>
   )
 }
