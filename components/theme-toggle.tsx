@@ -39,7 +39,14 @@ export function ThemeToggle() {
     })
     .call(() => {
       // Change theme in the middle of animation
-      setTheme(theme === "dark" ? "light" : "dark")
+      // Handle system theme: if system, check actual rendered theme
+      if (theme === "system") {
+        // Check if system is currently dark
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+        setTheme(isDark ? "light" : "dark")
+      } else {
+        setTheme(theme === "dark" ? "light" : "dark")
+      }
     })
     .to(iconRef.current, {
       rotateY: 0,
@@ -83,7 +90,7 @@ export function ThemeToggle() {
       aria-label="Toggle theme"
     >
       <div ref={iconRef} className="flex items-center justify-center">
-        {theme === "dark" ? 
+        {theme === "dark" || (theme === "system" && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 
           <Sun className="h-3.5 w-3.5" /> : 
           <Moon className="h-3.5 w-3.5" />
         }
