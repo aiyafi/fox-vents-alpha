@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { isPostLiked, addLikedPost, removeLikedPost } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
 import { MarkdownText } from "@/components/markdown-text"
@@ -18,6 +19,14 @@ interface PostProps {
 
 export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostProps) {
   const [liked, setLiked] = useState(() => isPostLiked(post.id))
+  const router = useRouter()
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault()
+    // Save scroll position before navigating
+    sessionStorage.setItem('feed-scroll-position', window.scrollY.toString())
+    router.push(`/post/${post.id}`)
+  }
 
   const handleLike = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -45,7 +54,7 @@ export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostP
   }
 
   return (
-    <Link href={`/post/${post.id}`} className="block">
+    <div onClick={handleClick} className="block cursor-pointer">
       <Card
         data-post-card
         data-post-id={dataPostId}
@@ -98,6 +107,6 @@ export function Post({ post, 'data-post-id': dataPostId, isLast = false }: PostP
           </div>
         </div>
       </Card>
-    </Link>
+    </div>
   )
 }

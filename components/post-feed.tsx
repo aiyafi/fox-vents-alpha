@@ -45,6 +45,20 @@ export function PostFeed() {
     fetchInitialPosts()
   }, [])
 
+  // Restore scroll position when returning from post detail
+  useEffect(() => {
+    if (!loading && posts.length > 0) {
+      const savedPosition = sessionStorage.getItem('feed-scroll-position')
+      if (savedPosition) {
+        // Wait for DOM to be ready
+        requestAnimationFrame(() => {
+          window.scrollTo(0, parseInt(savedPosition, 10))
+          sessionStorage.removeItem('feed-scroll-position')
+        })
+      }
+    }
+  }, [loading, posts])
+
   // Load more posts
   const loadMore = useCallback(async () => {
     if (loadingMore || !hasMore || !lastVisible) return

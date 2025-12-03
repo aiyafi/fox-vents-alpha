@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from "react"
 import { Heart, ArrowLeft, Share2 } from "lucide-react"
-import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { gsap } from "gsap"
@@ -115,16 +114,15 @@ export function PostDetail({ post }: PostDetailProps) {
         ref={backButtonRef}
         className="px-4 flex items-center justify-between"
       >
-        <Link href="/">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to feed
-          </Button>
-        </Link>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => window.history.back()}
+          className="text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Back to feed
+        </Button>
         <time className="text-sm text-muted-foreground">
           {post.timestamp}
         </time>
