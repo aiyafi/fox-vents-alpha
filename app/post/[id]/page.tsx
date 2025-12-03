@@ -2,6 +2,7 @@ import { Navbar } from "@/components/navbar"
 import { PostDetail } from "@/components/post-detail"
 import { PageTransition } from "@/components/page-transition"
 import { getPostById } from "@/lib/firestore"
+import { stripMarkdown } from "@/lib/utils"
 import { notFound } from "next/navigation"
 
 interface Props {
@@ -45,9 +46,11 @@ export async function generateMetadata({ params }: Props) {
       }
     }
 
+    const cleanContent = stripMarkdown(post.content)
+
     return {
-      title: `${post.content.substring(0, 50)}... - Fox Thoughts`,
-      description: post.content.substring(0, 160),
+      title: `${cleanContent.substring(0, 50)}${cleanContent.length > 50 ? '...' : ''} - Fox Thoughts`,
+      description: cleanContent.substring(0, 160),
     }
   } catch {
     return {

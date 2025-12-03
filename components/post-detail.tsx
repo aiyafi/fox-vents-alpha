@@ -9,6 +9,7 @@ import { gsap } from "gsap"
 import { addLikedPost, removeLikedPost, isPostLiked } from "@/lib/storage"
 import { PostWithTimestamp } from "@/lib/types"
 import { MarkdownText } from "@/components/markdown-text"
+import { stripMarkdown } from "@/lib/utils"
 
 interface PostDetailProps {
   post: PostWithTimestamp
@@ -81,12 +82,13 @@ export function PostDetail({ post }: PostDetailProps) {
 
   const handleShare = async () => {
     const url = window.location.href
+    const cleanContent = stripMarkdown(post.content)
 
     if (navigator.share) {
       try {
         await navigator.share({
           title: "Fox Thoughts",
-          text: post.content.substring(0, 100) + "...",
+          text: cleanContent.substring(0, 100) + (cleanContent.length > 100 ? "..." : ""),
           url,
         })
       } catch {

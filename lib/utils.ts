@@ -69,3 +69,29 @@ export function formatTimestamp(date: Date): string {
   if (days < 7) return `${days}d ago`
   return date.toLocaleDateString()
 }
+
+/**
+ * Strip markdown syntax from text for use in titles and metadata
+ */
+export function stripMarkdown(text: string): string {
+  return text
+    // Remove headers
+    .replace(/^#{1,6}\s+/gm, '')
+    // Remove bold/italic
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    // Remove blockquotes
+    .replace(/^>\s+/gm, '')
+    // Remove lists
+    .replace(/^[\*\-\+]\s+/gm, '')
+    .replace(/^\d+\.\s+/gm, '')
+    // Remove links but keep text
+    .replace(/\[([^\]]+)\]\([^\)]+\)/g, '$1')
+    // Remove inline code
+    .replace(/`([^`]+)`/g, '$1')
+    // Remove code blocks
+    .replace(/```[\s\S]*?```/g, '')
+    // Clean up extra whitespace
+    .replace(/\s+/g, ' ')
+    .trim()
+}
