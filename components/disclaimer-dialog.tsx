@@ -19,7 +19,6 @@ const STORAGE_KEY = "fox-thoughts-disclaimer-accepted"
 export function DisclaimerDialog() {
   const [open, setOpen] = useState(false)
   const [dontShowAgain, setDontShowAgain] = useState(false)
-  const [showWarning, setShowWarning] = useState(false)
 
   useEffect(() => {
     // Check if user has already accepted
@@ -30,13 +29,9 @@ export function DisclaimerDialog() {
   }, [])
 
   const handleAccept = () => {
-    if (!dontShowAgain) {
-      setShowWarning(true)
-      setTimeout(() => setShowWarning(false), 3000)
-      return
+    if (dontShowAgain) {
+      localStorage.setItem(STORAGE_KEY, "true")
     }
-    
-    localStorage.setItem(STORAGE_KEY, "true")
     setOpen(false)
   }
 
@@ -51,7 +46,7 @@ export function DisclaimerDialog() {
           onPointerDownOutside={(e) => e.preventDefault()}
           onEscapeKeyDown={(e) => e.preventDefault()}
         >
-          <DialogHeader>
+          <DialogHeader className="text-center">
             <DialogTitle className="text-xl font-semibold">
               Before You Enter
             </DialogTitle>
@@ -75,27 +70,15 @@ export function DisclaimerDialog() {
           </DialogHeader>
 
           <div className="flex flex-col gap-4 pt-4">
-            <div className={cn(
-              "flex items-center space-x-2 transition-all duration-300",
-              showWarning && "animate-pulse"
-            )}>
+            <div className="flex items-center space-x-2">
               <Checkbox
                 id="dont-show"
                 checked={dontShowAgain}
-                onCheckedChange={(checked) => {
-                  setDontShowAgain(checked === true)
-                  setShowWarning(false)
-                }}
-                className={cn(
-                  showWarning && "border-destructive data-[state=unchecked]:border-destructive"
-                )}
+                onCheckedChange={(checked) => setDontShowAgain(checked === true)}
               />
               <label
                 htmlFor="dont-show"
-                className={cn(
-                  "text-sm cursor-pointer select-none transition-colors",
-                  showWarning ? "text-destructive" : "text-muted-foreground"
-                )}
+                className="text-sm text-muted-foreground cursor-pointer select-none"
               >
                 Don't show this again
               </label>
