@@ -42,19 +42,20 @@ export async function generateMetadata({ params }: Props) {
     
     if (!post) {
       return {
-        title: 'Post not found - Fox Thoughts',
+        title: 'Post not found - FoxThoughts',
       }
     }
 
     const cleanContent = stripMarkdown(post.content)
+    const words = cleanContent.split(/\s+/).slice(0, 5).join(' ')
 
     return {
-      title: `${cleanContent.substring(0, 50)}${cleanContent.length > 50 ? '...' : ''} - Fox Thoughts`,
+      title: `${words}... on FoxThoughts`,
       description: cleanContent.substring(0, 160),
     }
   } catch {
     return {
-      title: 'Post - Fox Thoughts',
+      title: 'Post - FoxThoughts',
     }
   }
 } 

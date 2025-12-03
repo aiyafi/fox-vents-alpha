@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { LenisProvider } from "@/components/lenis-provider"
 
 export const metadata = {
-  title: "Fox Thoughts",
+  title: "Home - FoxThoughts",
   description: "A quiet place for K9Fox to drop crumbs — honest thoughts, quietly placed.",
 }
 
