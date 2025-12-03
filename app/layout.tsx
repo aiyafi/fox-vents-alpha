@@ -3,6 +3,7 @@ import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LenisProvider } from "@/components/lenis-provider"
 import { DisclaimerDialog } from "@/components/disclaimer-dialog"
+import { DevToolsDetector } from "@/components/devtools-detector"
 
 export const metadata = {
   title: "Home - FoxThoughts",
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <LenisProvider>
+            <DevToolsDetector />
             <DisclaimerDialog />
             {children}
           </LenisProvider>
